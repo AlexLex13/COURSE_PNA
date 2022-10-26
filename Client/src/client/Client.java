@@ -1,22 +1,17 @@
 package client;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.Socket;
-
 import GUI.InitialWindow;
 import javafx.application.Application;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 
 
 public class Client extends Application{
@@ -52,8 +47,6 @@ public class Client extends Application{
                 clientMessage = message.getText();
                 outStream.writeUTF(clientMessage);
                 outStream.flush();
-                if (clientMessage.equals("bye"))
-                    stage.close();
                 if (clientMessage.equals("100"))
                     new InitialWindow(socket, inStream, outStream).display();
                 serverMessage = inStream.readUTF();

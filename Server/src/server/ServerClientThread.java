@@ -2,10 +2,13 @@ package server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 
 class ServerClientThread extends Thread {
     Socket serverClient;
+    DataInputStream inStream;
+    DataOutputStream outStream;
     int clientNumber;
     int square;
 
@@ -16,25 +19,31 @@ class ServerClientThread extends Thread {
 
     public void run() {
         try {
-            DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
-            DataOutputStream outStream = new DataOutputStream(serverClient.getOutputStream());
+            inStream = new DataInputStream(serverClient.getInputStream());
+            outStream = new DataOutputStream(serverClient.getOutputStream());
             String clientMessage, serverMessage;
             while (true) {
                 clientMessage = inStream.readUTF();
-                if (clientMessage.equals("bye"))
-                    break;
                 System.out.println("From Client " + clientNumber + ": number is " + clientMessage);
-                square = Integer.parseInt(clientMessage) * Integer.parseInt(clientMessage);
+                try {
+                    square = Integer.parseInt(clientMessage) * Integer.parseInt(clientMessage);
+                }catch (NumberFormatException e) {
+                    square = -1;
+                }
                 serverMessage = " Square of " + clientMessage + " is " + square;
                 outStream.writeUTF(serverMessage);
                 outStream.flush();
             }
-            inStream.close();
-            outStream.close();
-            serverClient.close();
         } catch (Exception ex) {
             System.out.println(ex);
         } finally {
+            try {
+                inStream.close();
+                outStream.close();
+                serverClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            };
             System.out.println("Client number " + clientNumber + " exit!");
         }
     }
