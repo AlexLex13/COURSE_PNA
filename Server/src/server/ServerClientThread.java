@@ -18,14 +18,14 @@ class ServerClientThread extends Thread {
         try {
             DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
             DataOutputStream outStream = new DataOutputStream(serverClient.getOutputStream());
-            String clientMessage = "", serverMessage = "";
+            String clientMessage, serverMessage;
             while (true) {
                 clientMessage = inStream.readUTF();
                 if (clientMessage.equals("bye"))
                     break;
                 System.out.println("From Client " + clientNumber + ": number is " + clientMessage);
                 square = Integer.parseInt(clientMessage) * Integer.parseInt(clientMessage);
-                serverMessage = "From Server to Client " + clientNumber + " Square of " + clientMessage + " is " + square;
+                serverMessage = " Square of " + clientMessage + " is " + square;
                 outStream.writeUTF(serverMessage);
                 outStream.flush();
             }
