@@ -1,9 +1,13 @@
 package Server;
 
+import Classes.Admin;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+
+import static DataBase.DataBaseHandler.getAdmin;
 
 class ServerClientThread extends Thread {
     Socket serverClient;
@@ -24,13 +28,13 @@ class ServerClientThread extends Thread {
             String clientMessage, serverMessage;
             while (true) {
                 clientMessage = inStream.readUTF();
-                System.out.println("From Client " + clientNumber + ": number is " + clientMessage);
-                try {
-                    square = Integer.parseInt(clientMessage) * Integer.parseInt(clientMessage);
-                }catch (NumberFormatException e) {
-                    square = -1;
-                }
-                serverMessage = " Square of " + clientMessage + " is " + square;
+                Admin admin = new Admin(clientMessage.split(" ")[0], clientMessage.split(" ")[1]);
+                System.out.println("From Client " + clientNumber + ": received " + admin);
+                var res = getAdmin(admin);
+                if(res != null)
+                    serverMessage = " Success authorization!";
+                else
+                    serverMessage = "LOX!";
                 outStream.writeUTF(serverMessage);
                 outStream.flush();
             }

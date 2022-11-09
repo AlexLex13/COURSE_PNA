@@ -39,7 +39,7 @@ public class DataBaseHandler {
         return properties;
     }
 
-    public ResultSet getAdmin(Admin admin) {
+    public static ResultSet getAdmin(Admin admin) {
         ResultSet resSet = null;
 
         String select = "SELECT * FROM \"Admin\" WHERE login=? AND password=?";

@@ -5,8 +5,7 @@ public class Admin {
     private String login;
     private String password;
 
-    public Admin(String id, String login, String password) {
-        this.id = id;
+    public Admin(String login, String password) {
         this.login = login;
         this.password = password;
     }

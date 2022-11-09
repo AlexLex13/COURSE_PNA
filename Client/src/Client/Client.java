@@ -1,5 +1,6 @@
 package Client;
 
+import Classes.Admin;
 import GUI.InitialWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -34,9 +35,10 @@ public class Client extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        Label lbl = new Label("Enter number :");
+        Label lbl = new Label("Enter :");
         lbl.setPrefWidth(200);
-        TextField message = new TextField();
+        TextField loginField = new TextField();
+        TextField passwordField = new TextField();
         Button btn = new Button("Click");
         btn.setPrefWidth(80);
 
@@ -44,11 +46,11 @@ public class Client extends Application{
 
             String clientMessage, serverMessage;
             try {
-                clientMessage = message.getText();
+                clientMessage = loginField.getText()+ " " + passwordField.getText();
                 outStream.writeUTF(clientMessage);
                 outStream.flush();
-                if (clientMessage.equals("100"))
-                    new InitialWindow(socket, inStream, outStream).display();
+//                if (clientMessage.equals("100"))
+//                    new InitialWindow(socket, inStream, outStream).display();
                 serverMessage = inStream.readUTF();
                 lbl.setText(serverMessage);
 
@@ -57,7 +59,7 @@ public class Client extends Application{
             }
         });
 
-        FlowPane root = new FlowPane(lbl, message, btn);
+        FlowPane root = new FlowPane(lbl, loginField, passwordField,  btn);
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
