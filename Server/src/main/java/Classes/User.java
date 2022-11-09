@@ -1,15 +1,9 @@
 package Classes;
 
-public class Admin {
+public class User {
     private String id;
     private String login;
     private String password;
-
-    public Admin(String id, String login, String password) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-    }
 
     public String getId() {
         return id;
@@ -21,6 +15,12 @@ public class Admin {
 
     public String getPassword() {
         return password;
+    }
+
+    public User(String id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
     }
 
     public void setId(String id) {
@@ -37,7 +37,7 @@ public class Admin {
 
     @Override
     public String toString() {
-        return "Admin{" +
+        return "User{" +
                 "id='" + id + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
