@@ -1,5 +1,7 @@
 package DataBase;
 
+import Classes.Admin;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,16 +39,21 @@ public class DataBaseHandler {
         return properties;
     }
 
-    public static void main(String[] args) throws SQLException {
+    public ResultSet getAdmin(Admin admin) {
         ResultSet resSet = null;
-        try {
-            PreparedStatement prSt = getDBConnection().prepareStatement("SELECT * FROM \"Admin\" ORDER BY id ASC ");
-            resSet = prSt.executeQuery();
-            resSet.next();
 
+        String select = "SELECT * FROM \"Admin\" WHERE login=? AND password=?";
+        try {
+            PreparedStatement prSt = getDBConnection().prepareStatement(select);
+            prSt.setString(1,admin.getLogin());
+            prSt.setString(2,admin.getPassword());
+
+            resSet = prSt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(resSet.getString("password"));
+
+        return resSet;
     }
+
 }
