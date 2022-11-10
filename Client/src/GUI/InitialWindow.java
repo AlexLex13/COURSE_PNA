@@ -38,10 +38,8 @@ public class InitialWindow {
             String clientMessage, serverMessage;
             try {
                 clientMessage = message.getText();
-                outStream.writeUTF(clientMessage);
+                outStream.writeUTF("next "+ clientMessage);
                 outStream.flush();
-                if (clientMessage.equals("bye"))
-                    stage.close();
                 serverMessage = inStream.readUTF();
                 lbl.setText(serverMessage);
 

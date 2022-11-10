@@ -24,7 +24,6 @@ public class DataBaseHandler {
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
-        System.out.println("Opened database successfully");
         return dbConnection;
     }
 
@@ -52,7 +51,6 @@ public class DataBaseHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return resSet;
     }
 

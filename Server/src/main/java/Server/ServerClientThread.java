@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import static DataBase.DataBaseHandler.getAdmin;
+import static Server.ServerMethods.loginAdmin;
 
 class ServerClientThread extends Thread {
     Socket serverClient;
@@ -24,16 +25,24 @@ class ServerClientThread extends Thread {
         try {
             inStream = new DataInputStream(serverClient.getInputStream());
             outStream = new DataOutputStream(serverClient.getOutputStream());
-            String clientMessage, serverMessage = "Error!";
+            String clientMessage, serverMessage;
             while (true) {
                 clientMessage = inStream.readUTF();
-                Admin admin = new Admin(clientMessage.split(" ")[0], clientMessage.split(" ")[1]);
-                System.out.println("From Client " + clientNumber + ": received " + admin);
-                var res = getAdmin(admin);
-                if(res != null)
-                    serverMessage = "Success authorization!";
-                outStream.writeUTF(serverMessage);
-                outStream.flush();
+                switch (clientMessage.split(" ")[0]){
+                    case "authorization": {
+                        Admin admin = new Admin(clientMessage.split(" ")[1], clientMessage.split(" ")[2]);
+                        System.out.println("From Client " + clientNumber + ": received " + admin);
+                        serverMessage = loginAdmin(admin);
+                        outStream.writeUTF(serverMessage);
+                        outStream.flush();
+                    }break;
+                    case "next": {
+                        System.out.println("From Client " + clientNumber + ": received " + clientMessage);
+                        serverMessage = clientMessage.split(" ")[1] + " HOHHI";
+                        outStream.writeUTF(serverMessage);
+                        outStream.flush();
+                    }
+                }
             }
         } catch (Exception ex) {
             System.out.println(ex);

@@ -46,7 +46,7 @@ public class Client extends Application{
 
             String clientMessage, serverMessage;
             try {
-                clientMessage = loginField.getText()+ " " + passwordField.getText();
+                clientMessage ="authorization " + loginField.getText()+ " " + passwordField.getText();
                 outStream.writeUTF(clientMessage);
                 outStream.flush();
                 serverMessage = inStream.readUTF();
