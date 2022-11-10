@@ -8,8 +8,7 @@ import java.sql.SQLException;
 
 public class ServerMethods {
     public static String loginAdmin(Admin admin){
-        DataBaseHandler dbHandler = new DataBaseHandler();
-        ResultSet result =  dbHandler.getAdmin(admin);
+        ResultSet result =  DataBaseHandler.getAdmin(admin);
 
         int counter = 0;
 

@@ -7,9 +7,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import static DataBase.DataBaseHandler.getAdmin;
-import static Server.ServerMethods.loginAdmin;
-
 class ServerClientThread extends Thread {
     Socket serverClient;
     DataInputStream inStream;
@@ -32,7 +29,7 @@ class ServerClientThread extends Thread {
                     case "authorization": {
                         Admin admin = new Admin(clientMessage.split(" ")[1], clientMessage.split(" ")[2]);
                         System.out.println("From Client " + clientNumber + ": received " + admin);
-                        serverMessage = loginAdmin(admin);
+                        serverMessage = ServerMethods.loginAdmin(admin);
                         outStream.writeUTF(serverMessage);
                         outStream.flush();
                     }break;
