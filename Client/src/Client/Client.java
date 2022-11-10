@@ -49,10 +49,10 @@ public class Client extends Application{
                 clientMessage = loginField.getText()+ " " + passwordField.getText();
                 outStream.writeUTF(clientMessage);
                 outStream.flush();
-//                if (clientMessage.equals("100"))
-//                    new InitialWindow(socket, inStream, outStream).display();
                 serverMessage = inStream.readUTF();
                 lbl.setText(serverMessage);
+                if (!serverMessage.equals("Error!"))
+                    new InitialWindow(socket, inStream, outStream).display();
 
             } catch (Exception e) {
                 System.out.println(e);

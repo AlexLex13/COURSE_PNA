@@ -1,6 +1,8 @@
 package Classes;
 
-public class Doctor {
+import java.io.Serializable;
+
+public class Doctor implements Serializable {
     private String id;
     private String name;
     private String specialization;

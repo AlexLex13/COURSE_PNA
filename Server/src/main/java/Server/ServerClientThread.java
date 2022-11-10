@@ -14,7 +14,6 @@ class ServerClientThread extends Thread {
     DataInputStream inStream;
     DataOutputStream outStream;
     int clientNumber;
-    int square;
 
     ServerClientThread(Socket inSocket, int counter) {
         serverClient = inSocket;
@@ -25,16 +24,14 @@ class ServerClientThread extends Thread {
         try {
             inStream = new DataInputStream(serverClient.getInputStream());
             outStream = new DataOutputStream(serverClient.getOutputStream());
-            String clientMessage, serverMessage;
+            String clientMessage, serverMessage = "Error!";
             while (true) {
                 clientMessage = inStream.readUTF();
                 Admin admin = new Admin(clientMessage.split(" ")[0], clientMessage.split(" ")[1]);
                 System.out.println("From Client " + clientNumber + ": received " + admin);
                 var res = getAdmin(admin);
                 if(res != null)
-                    serverMessage = " Success authorization!";
-                else
-                    serverMessage = "LOX!";
+                    serverMessage = "Success authorization!";
                 outStream.writeUTF(serverMessage);
                 outStream.flush();
             }
