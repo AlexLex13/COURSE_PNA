@@ -7,8 +7,8 @@ import java.net.Socket;
 
 class ServerClientThread extends Thread {
     Socket serverClient;
-    ObjectInputStream inStream;
-    ObjectOutputStream outStream;
+    DataInputStream inStream;
+    DataOutputStream outStream;
     int clientNumber;
 
     ServerClientThread(Socket inSocket, int counter) {
@@ -18,8 +18,8 @@ class ServerClientThread extends Thread {
 
     public void run() {
         try {
-            inStream = new ObjectInputStream(serverClient.getInputStream());
-            outStream = new ObjectOutputStream(serverClient.getOutputStream());
+            inStream = new DataInputStream(serverClient.getInputStream());
+            outStream = new DataOutputStream(serverClient.getOutputStream());
             String clientMessage, serverMessage;
             while (true) {
                 clientMessage = inStream.readUTF();

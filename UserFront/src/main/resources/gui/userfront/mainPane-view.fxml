@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.userfront.MainPaneController">
    <children>
-      <Label fx:id="hello" layoutX="255.0" layoutY="63.0" text="Hello">
+      <Label fx:id="hello" layoutX="279.0" layoutY="14.0" text="Hello">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <ListView fx:id="list" layoutX="16.0" layoutY="54.0" onEditStart="#initialize" prefHeight="202.0" prefWidth="570.0" />
    </children>
 </AnchorPane>

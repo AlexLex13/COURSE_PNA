@@ -10,8 +10,8 @@ import java.net.Socket;
 
 public class FrontApplication extends Application {
     static Socket socket;
-    static ObjectInputStream inStream;
-    static ObjectOutputStream outStream;
+    static DataInputStream inStream;
+    static DataOutputStream outStream;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -24,8 +24,8 @@ public class FrontApplication extends Application {
 
     public static void main(String[] args) throws IOException {
         socket = new Socket("127.0.0.1", 8888);
-        inStream = new ObjectInputStream(socket.getInputStream());
-        outStream = new ObjectOutputStream(socket.getOutputStream());
+        inStream = new DataInputStream(socket.getInputStream());
+        outStream = new DataOutputStream(socket.getOutputStream());
 
         launch(args);
 

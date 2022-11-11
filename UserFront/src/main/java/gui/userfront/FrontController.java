@@ -31,7 +31,7 @@ public class FrontController {
         String clientMessage, serverMessage;
         try {
             clientMessage ="authorization " + loginField.getText()+ " " + passwordField.getText();
-            outStream.writeObject(clientMessage);
+            outStream.writeUTF(clientMessage);
             outStream.flush();
             serverMessage = inStream.readUTF();
             if (!serverMessage.equals("Error!"))

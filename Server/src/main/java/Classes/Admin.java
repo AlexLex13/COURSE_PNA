@@ -2,46 +2,18 @@ package Classes;
 
 import java.io.Serializable;
 
-public class Admin implements Serializable {
-    private String id;
-    private String login;
-    private String password;
+public class Admin extends Person {
 
     public Admin(String login, String password) {
-        this.login = login;
-        this.password = password;
+        super(login, password);
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public Admin(String id, String login, String password) {
+        super(id, login, password);
     }
 
     @Override
     public String toString() {
-        return "Admin{" +
-                "id='" + id + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "Admin{} " + super.toString();
     }
 }

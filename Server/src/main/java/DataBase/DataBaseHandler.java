@@ -37,21 +37,4 @@ public class DataBaseHandler {
         properties.load(inputStream);
         return properties;
     }
-
-    public static ResultSet getAdmin(Admin admin) {
-        ResultSet resSet = null;
-
-        String select = "SELECT * FROM \"Admin\" WHERE login=? AND password=?";
-        try {
-            PreparedStatement prSt = getDBConnection().prepareStatement(select);
-            prSt.setString(1,admin.getLogin());
-            prSt.setString(2,admin.getPassword());
-
-            resSet = prSt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resSet;
-    }
-
 }
