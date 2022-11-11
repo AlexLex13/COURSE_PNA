@@ -1,14 +1,15 @@
 package Server;
 
 import Classes.Admin;
+import Classes.Person;
 import DataBase.UsersHandler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ServerMethods {
-    public static String loginAdmin(Admin admin){
-        ResultSet result =  UsersHandler.getAdmin(admin);
+    public static String login(Person person){
+        ResultSet result =  UsersHandler.getPerson(person);
 
         int counter = 0;
 

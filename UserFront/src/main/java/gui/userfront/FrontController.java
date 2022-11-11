@@ -1,9 +1,7 @@
 package gui.userfront;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import static gui.userfront.FrontApplication.*;
 
@@ -15,7 +13,7 @@ public class FrontController {
     private TextField loginField;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
 
     @FXML
     private Button entryButton;
@@ -27,10 +25,17 @@ public class FrontController {
     private Button registrationButton;
 
     @FXML
+    private ToggleButton typeButton;
+
+    @FXML
     protected void onEntryButtonClick() {
-        String clientMessage, serverMessage;
+        String clientMessage, serverMessage, type;
+        if(typeButton.isSelected())
+            type = "User ";
+        else
+            type = "Admin ";
         try {
-            clientMessage ="authorization " + loginField.getText()+ " " + passwordField.getText();
+            clientMessage ="authorization "+ type + loginField.getText()+ " " + passwordField.getText();
             outStream.writeUTF(clientMessage);
             outStream.flush();
             serverMessage = inStream.readUTF();
@@ -40,5 +45,13 @@ public class FrontController {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @FXML
+    protected void onTypeButtonClick() {
+        if(typeButton.isSelected())
+            typeButton.setText("Пользователь");
+        else
+            typeButton.setText("Администратор");
     }
 }

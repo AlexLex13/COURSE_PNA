@@ -1,6 +1,8 @@
 package Server;
 
 import Classes.Admin;
+import Classes.Person;
+import Classes.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -23,11 +25,16 @@ class ServerClientThread extends Thread {
             String clientMessage, serverMessage;
             while (true) {
                 clientMessage = inStream.readUTF();
-                switch (clientMessage.split(" ")[0]){
+                System.out.println("From Client " + clientNumber + "---> " + clientMessage);
+                String[] strArr = clientMessage.split(" ");
+                switch (strArr[0]){
                     case "authorization": {
-                        Admin admin = new Admin(clientMessage.split(" ")[1], clientMessage.split(" ")[2]);
-                        System.out.println("From Client " + clientNumber + ": received " + admin);
-                        serverMessage = ServerMethods.loginAdmin(admin);
+                        Person person;
+                        if(strArr[1].equals("Admin"))
+                            person = new Admin(strArr[2], strArr[3]);
+                        else
+                            person = new User(strArr[2], strArr[3]);
+                        serverMessage = ServerMethods.login(person);
                         outStream.writeUTF(serverMessage);
                         outStream.flush();
                     }break;

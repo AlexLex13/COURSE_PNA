@@ -1,6 +1,7 @@
 package DataBase;
 
 import Classes.Admin;
+import Classes.Person;
 import Classes.User;
 
 import java.sql.PreparedStatement;
@@ -9,14 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UsersHandler {
-    public static ResultSet getAdmin(Admin admin) {
+    public static ResultSet getPerson(Person person) {
         ResultSet resSet = null;
+        String TABLE = "User";
 
-        String select = "SELECT * FROM \"Admin\" WHERE login=? AND password=?";
+        if(person instanceof Admin)
+            TABLE = "Admin";
+
+        String select = "SELECT * FROM \"" + TABLE + "\" WHERE login=? AND password=?";
         try {
             PreparedStatement prSt = DataBaseHandler.getDBConnection().prepareStatement(select);
-            prSt.setString(1,admin.getLogin());
-            prSt.setString(2,admin.getPassword());
+            prSt.setString(1,person.getLogin());
+            prSt.setString(2,person.getPassword());
 
             resSet = prSt.executeQuery();
         } catch (SQLException e) {
@@ -25,8 +30,8 @@ public class UsersHandler {
         return resSet;
     }
 
-    public static ArrayList<User> getAdmins() {
-        ArrayList<User> admins = new ArrayList<User>();
+    public static ArrayList<Admin> getAdmins() {
+        ArrayList<Admin> admins = new ArrayList<Admin>();
         String select = "SELECT * FROM \"Admin\"";
         try {
             PreparedStatement prSt = DataBaseHandler.getDBConnection().prepareStatement(select);
@@ -41,22 +46,6 @@ public class UsersHandler {
             e.printStackTrace();
         }
         return admins;
-    }
-
-    public static ResultSet getUser(User user) {
-        ResultSet resSet = null;
-
-        String select = "SELECT * FROM \"User\" WHERE login=? AND password=?";
-        try {
-            PreparedStatement prSt = DataBaseHandler.getDBConnection().prepareStatement(select);
-            prSt.setString(1,user.getLogin());
-            prSt.setString(2,user.getPassword());
-
-            resSet = prSt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resSet;
     }
 
     public static ArrayList<User> getUsers() {
