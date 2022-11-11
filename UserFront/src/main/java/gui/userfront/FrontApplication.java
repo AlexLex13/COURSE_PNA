@@ -5,15 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class FrontApplication extends Application {
     static Socket socket;
-    static DataInputStream inStream;
-    static DataOutputStream outStream;
+    static ObjectInputStream inStream;
+    static ObjectOutputStream outStream;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -26,8 +24,8 @@ public class FrontApplication extends Application {
 
     public static void main(String[] args) throws IOException {
         socket = new Socket("127.0.0.1", 8888);
-        inStream = new DataInputStream(socket.getInputStream());
-        outStream = new DataOutputStream(socket.getOutputStream());
+        inStream = new ObjectInputStream(socket.getInputStream());
+        outStream = new ObjectOutputStream(socket.getOutputStream());
 
         launch(args);
 

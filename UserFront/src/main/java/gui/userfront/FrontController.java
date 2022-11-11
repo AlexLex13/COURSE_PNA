@@ -31,12 +31,11 @@ public class FrontController {
         String clientMessage, serverMessage;
         try {
             clientMessage ="authorization " + loginField.getText()+ " " + passwordField.getText();
-            outStream.writeUTF(clientMessage);
+            outStream.writeObject(clientMessage);
             outStream.flush();
             serverMessage = inStream.readUTF();
-            authorization.setText(serverMessage);
-//            if (!serverMessage.equals("Error!"))
-//                new InitialWindow(socket, inStream, outStream).display();
+            if (!serverMessage.equals("Error!"))
+                new MainPaneApplication(socket, inStream, outStream).display();
 
         } catch (Exception e) {
             System.out.println(e);
