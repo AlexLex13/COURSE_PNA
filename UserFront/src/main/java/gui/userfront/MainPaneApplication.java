@@ -1,9 +1,7 @@
 package gui.userfront;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -14,10 +12,10 @@ import java.net.Socket;
 
 public class MainPaneApplication{
         Socket socket;
-        DataInputStream inStream;
-        DataOutputStream outStream;
+        ObjectInputStream inStream;
+        ObjectOutputStream outStream;
 
-        public MainPaneApplication(Socket socket, DataInputStream inStream, DataOutputStream outStream) {
+        public MainPaneApplication(Socket socket, ObjectInputStream inStream, ObjectOutputStream outStream) {
             this.socket = socket;
             this.inStream = inStream;
             this.outStream = outStream;

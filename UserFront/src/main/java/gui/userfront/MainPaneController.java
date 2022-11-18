@@ -1,10 +1,10 @@
 package gui.userfront;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+
+import java.io.IOException;
 
 public class MainPaneController {
 
@@ -15,9 +15,13 @@ public class MainPaneController {
     private ListView<String> list;
 
     @FXML
-    void initialize(){
-        ObservableList<String> regions = FXCollections.observableArrayList("Минск","Минская область",
-                "Гомельская область","Могилевская область","Витебская область","Гродненская область","Брестская область");
-        list.setItems(regions);
+    void initialize() throws IOException {
+//        String clientMessage ="next";
+//        outStream.writeUTF(clientMessage);
+//        outStream.flush();
+//
+//        ObservableList<String> us = FXCollections.observableArrayList(inStream.readUTF().split("`"));
+//
+//        list.setItems(us);
     }
 }

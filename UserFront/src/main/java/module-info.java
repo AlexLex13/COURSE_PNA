@@ -8,6 +8,7 @@ module gui.userfront {
     requires validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.desktop;
 
     opens gui.userfront to javafx.fxml;
     exports gui.userfront;
