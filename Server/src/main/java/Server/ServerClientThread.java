@@ -1,9 +1,11 @@
 package Server;
 
-import Classes.User;
 import DataBase.DataBaseHandler;
+import model.User;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 class ServerClientThread extends Thread {

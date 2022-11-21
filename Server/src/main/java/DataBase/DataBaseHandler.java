@@ -1,14 +1,10 @@
 package DataBase;
 
-import Classes.Admin;
-import Classes.Person;
-import Classes.User;
 
-import java.sql.PreparedStatement;
+import model.User;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 public class DataBaseHandler extends DataBaseConnector {
     public DataBaseHandler() { super.createDBConnection();}
@@ -16,16 +12,25 @@ public class DataBaseHandler extends DataBaseConnector {
     public User authorization(User user) throws SQLException {
         try {
             ResultSet rs = super.getStatement().executeQuery(String.format("SELECT * FROM \"User\" WHERE login='%s';", user.getLogin()));
-            if (rs.next()) {
+            if(rs.next()){
                 if (user.getPassword().equals(rs.getString("password"))) {
+                    user.setRole(rs.getString("role"));
                     user.setId(Integer.parseInt(rs.getString("id")));
-                    return user;
+                }
+                else{
+                    user.setRole("wrong");
                 }
             }
-        }catch(SQLException ex){
-                System.out.println(ex.getMessage());
+            else {
+                user.setRole("wrong");
             }
-            return null;
+            return user;
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
 
 
         //---------------------ПОЛУЧЕНИЕ ВСЕЙ ТАБЛИЦЫ-----------------------------------
@@ -513,5 +518,5 @@ public class DataBaseHandler extends DataBaseConnector {
 //            System.out.println(ex.getMessage());
 //        }
 //        return "Не удалось удалить данные!";
-    }
+//    }
 }
