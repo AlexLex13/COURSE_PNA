@@ -1,10 +1,12 @@
 package DataBase;
 
-
+import model.Admin;
+import model.Doctor;
 import model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DataBaseHandler extends DataBaseConnector {
     public DataBaseHandler() { super.createDBConnection();}
@@ -36,102 +38,88 @@ public class DataBaseHandler extends DataBaseConnector {
         //---------------------ПОЛУЧЕНИЕ ВСЕЙ ТАБЛИЦЫ-----------------------------------
 
 
-//    public ArrayList<Admin> getAllAdmins() throws SQLException{
-//        try {
-//            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT * FROM user INNER JOIN person on user.person_id=person.person_id\n" +
-//                    "INNER JOIN admin on user.user_id=admin.user_id WHERE user.role='admin';"));
-//            ArrayList<Admin> adminList = new ArrayList<>();
-//            while(rs.next()){
-//                Admin admin = new Admin(
-//                        Integer.parseInt(rs.getString("user_id")),
-//                        rs.getString("login"),
-//                        rs.getString("password"),
-//                        rs.getString("role"),
-//                        rs.getString("work_phone"),
-//                        rs.getString("name"),
-//                        rs.getString("surname"),
-//                        rs.getString("lastname"),
-//                        rs.getString("personal_phone"),
-//                        Integer.parseInt(rs.getString("person_id")),
-//                        Integer.parseInt(rs.getString("admin_id")),
-//                        rs.getString("rights"),
-//                        rs.getString("block")
-//                );
-//                adminList.add(admin);
-//            }
-//            return adminList;
-//        }
-//        catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return null;
-//    }
-//
-//    public ArrayList<User> getAllUsers() throws SQLException{
-//        try {
-//            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT * FROM user INNER JOIN person ON user.person_id=person.person_id WHERE user.role='user';"));
-//            ArrayList<User> userList = new ArrayList<>();
-//            while(rs.next()){
-//                User user = new User(
-//                        Integer.parseInt(rs.getString("person_id")),
-//                        rs.getString("surname"),
-//                        rs.getString("name"),
-//                        rs.getString("lastname"),
-//                        rs.getString("personal_phone"),
-//                        Integer.parseInt(rs.getString("user_id")),
-//                        rs.getString("login"),
-//                        rs.getString("password"),
-//                        rs.getString("role"),
-//                        rs.getString("work_phone")
-//                );
-//                userList.add(user);
-//            }
-//            return userList;
-//        }
-//        catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return null;
-//    }
-//
-//    public ArrayList<Doctor> getAllDoctors() throws SQLException{
-//        try {
-//            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT * FROM user INNER JOIN person on user.person_id=person.person_id\n" +
-//                    "INNER JOIN doctor on user.user_id=doctor.user_id WHERE user.role='doctor';"));
-//            ArrayList<Doctor> doctorList = new ArrayList<>();
-//            while(rs.next()){
-//                String schedule[];
-//                schedule = rs.getString("schedule").split("-", 14);
-//                for(int i = 0; i < schedule.length; i++){
-//                    if(schedule[i] == null) schedule[i] = "";
-//                }
-//                Doctor doctor = new Doctor(
-//                        Integer.parseInt(rs.getString("person_id")),
-//                        rs.getString("surname"),
-//                        rs.getString("name"),
-//                        rs.getString("lastname"),
-//                        rs.getString("personal_phone"),
-//                        Integer.parseInt(rs.getString("user_id")),
-//                        rs.getString("login"),
-//                        rs.getString("password"),
-//                        rs.getString("role"),
-//                        rs.getString("work_phone"),
-//                        Integer.parseInt(rs.getString("doctor_id")),
-//                        rs.getString("post"),
-//                        rs.getString("room"),
-//                        rs.getString("district"),
-//                        schedule
-//                );
-//                doctorList.add(doctor);
-//            }
-//            return doctorList;
-//        }
-//        catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return null;
-//    }
-//
+    public ArrayList<Admin> getAllAdmins() throws SQLException{
+        try {
+            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" WHERE role='admin';");
+            ArrayList<Admin> adminList = new ArrayList<>();
+            while(rs.next()){
+                Admin admin = new Admin(
+                        Integer.parseInt(rs.getString("id")),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getString("role"),
+                        rs.getString("name"),
+                        Integer.parseInt(rs.getString("person_id")),
+                        Integer.parseInt(rs.getString("admin_id")),
+                        rs.getString("rights"),
+                        rs.getString("block")
+                );
+                adminList.add(admin);
+            }
+            return adminList;
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    public ArrayList<User> getAllUsers() throws SQLException{
+        try {
+            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" WHERE user.role='user';");
+            ArrayList<User> userList = new ArrayList<>();
+            while(rs.next()){
+                User user = new User(
+                        Integer.parseInt(rs.getString("person_id")),
+                        rs.getString("name"),
+                        Integer.parseInt(rs.getString("user_id")),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getString("role")
+                );
+                userList.add(user);
+            }
+            return userList;
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    public ArrayList<Doctor> getAllDoctors() throws SQLException{
+        try {
+            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"Doctor\"");
+            ArrayList<Doctor> doctorList = new ArrayList<>();
+            while(rs.next()){
+                String schedule[];
+                schedule = rs.getString("schedule").split("-", 14);
+                for(int i = 0; i < schedule.length; i++){
+                    if(schedule[i] == null) schedule[i] = "";
+                }
+                Doctor doctor = new Doctor(
+                        Integer.parseInt(rs.getString("person_id")),
+                        rs.getString("name"),
+                        Integer.parseInt(rs.getString("user_id")),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getString("role"),
+                        Integer.parseInt(rs.getString("doctor_id")),
+                        rs.getString("post"),
+                        rs.getString("room"),
+                        rs.getString("district"),
+                        schedule
+                );
+                doctorList.add(doctor);
+            }
+            return doctorList;
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
 //    public ArrayList<Client> getAllClients() throws SQLException{
 //        try {
 //            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT * FROM client INNER JOIN person ON client.person_id=person.person_id;"));

@@ -20,8 +20,8 @@ public class Doctor extends User implements Serializable{
         this.district = "";
     }
 
-    public Doctor(int person_id, String surname, String name, String lastname, String phone, int user_id, String login, String password, String role, String work_phone, int id, String post, String room, String district, String[] schedule) {
-        super(person_id, surname, name, lastname, phone, user_id, login, password, role, work_phone);
+    public Doctor(int person_id, String name, int user_id, String login, String password, String role, int id, String post, String room, String district, String[] schedule) {
+        super(person_id, name, user_id, login, password, role);
         this.id = id;
         this.post = post;
         this.room = room;

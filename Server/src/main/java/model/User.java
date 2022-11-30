@@ -7,7 +7,6 @@ public class User extends Person implements Serializable{
     private String login;
     private String password;
     private String role;
-    private String work_phone;
 
     public User(){
         super();
@@ -15,17 +14,14 @@ public class User extends Person implements Serializable{
         this.login = "";
         this.password = "";
         this.role = "";
-        this.work_phone = "";
     }
 
-    public User(int person_id, String surname, String name, String lastname, String phone, int user_id, String login, String password, String role, String work_phone){
-        super(person_id, surname, name, lastname, phone);
+    public User(int person_id, String name, int user_id, String login, String password, String role){
+        super(person_id, name);
         this.id = user_id;
         this.login = login;
         this.password = password;
         this.role = role;
-        if(work_phone == null) work_phone = "";
-        this.work_phone = work_phone;
     }
 
     @Override
@@ -64,13 +60,5 @@ public class User extends Person implements Serializable{
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getWork_phone() {
-        return work_phone;
-    }
-
-    public void setWork_phone(String work_phone) {
-        this.work_phone = work_phone;
     }
 }

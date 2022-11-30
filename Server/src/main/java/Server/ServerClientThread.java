@@ -36,15 +36,15 @@ class ServerClientThread extends Thread {
                         User authorizationUser = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.authorization(authorizationUser));
                         break;
-//                    case "getAllAdmins":
-//                        outStream.writeObject(dataBaseHandler.getAllAdmins());
-//                        break;
-//                    case "getAllUsers":
-//                        outStream.writeObject(dataBaseHandler.getAllUsers());
-//                        break;
-//                    case "getAllDoctors":
-//                        outStream.writeObject(dataBaseHandler.getAllDoctors());
-//                        break;
+                    case "getAllAdmins":
+                        outStream.writeObject(dataBaseHandler.getAllAdmins());
+                        break;
+                    case "getAllUsers":
+                        outStream.writeObject(dataBaseHandler.getAllUsers());
+                        break;
+                    case "getAllDoctors":
+                        outStream.writeObject(dataBaseHandler.getAllDoctors());
+                        break;
 //                    case "getAllClients":
 //                        outStream.writeObject(dataBaseHandler.getAllClients());
 //                        break;
@@ -116,8 +116,8 @@ class ServerClientThread extends Thread {
 //                        outStream.writeObject(dataBaseHandler.deleteUser(deleteUser));
 //                        break;
 //                    case "deleteClient":
-//                        Client deletClient = (Client) inStream.readObject();
-//                        outStream.writeObject(dataBaseHandler.deleteClient(deletClient));
+//                        Client deleteClient = (Client) inStream.readObject();
+//                        outStream.writeObject(dataBaseHandler.deleteClient(deleteClient));
 //                        break;
 //                    case "deleteDoctor":
 //                        Doctor deleteDoctor = (Doctor) inStream.readObject();
