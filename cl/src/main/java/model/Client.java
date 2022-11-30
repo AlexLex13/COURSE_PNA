@@ -19,7 +19,7 @@ public class Client extends Person implements Serializable{
     }
 
     public Client(int id, String surname, String name, String lastname, String phone, int id1, String district, String dateOfBirth, String address, String passportNumber) {
-        super(id, surname, name, lastname, phone);
+        super(id, name);
         this.id = id1;
         this.district = district;
         this.dateOfBirth = dateOfBirth;

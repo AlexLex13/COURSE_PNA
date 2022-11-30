@@ -18,10 +18,8 @@ import java.net.Socket;
 
 public class MainFrame extends JFrame{
     private JPanel panelMain;
-    private JLabel LoginLabel;
     private JTextField loginField;
     private JPasswordField passwordField;
-    private JLabel passwordLabel;
     private JButton clearButton;
     private JButton entranceButton;
 
@@ -97,7 +95,7 @@ public class MainFrame extends JFrame{
                         output.writeObject(user);
                         user = (User) input.readObject();
                         switch (user.getRole()) {
-                            case "wrong" -> JOptionPane.showMessageDialog(null, "Неправильно введён логин/пароль!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                            case "wrong" -> JOptionPane.showMessageDialog(null, "Пользователя с такими данными не существует!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                             case "admin" -> {
                                 new AdminFrame(user.getId()).setVisible(true);
                                 dispose();

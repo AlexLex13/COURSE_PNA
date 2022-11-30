@@ -146,11 +146,7 @@ public class UserFrame  extends JFrame{
             for(int i = 0; i < users.size(); i++){
                 if(USER_ID == users.get(i).getId()){
                     User user = users.get(i);
-                    mySurnameField.setText(user.getSurname());
                     myNameField.setText(user.getName());
-                    myLastnameField.setText(user.getLastname());
-                    myPhoneField.setText(user.getPhone());
-                    myWorkPhoneField.setText(user.getWork_phone());
                     myLoginField.setText(user.getLogin());
                     myPasswordField1.setText(user.getPassword());
                     myPasswordField2.setText(user.getPassword());
@@ -282,10 +278,7 @@ public class UserFrame  extends JFrame{
             try {
                 User user = new User();
                 user.setId(USER_ID);
-                user.setSurname(mySurnameField.getText());
                 user.setName(myNameField.getText());
-                user.setLastname(myLastnameField.getText());
-                user.setPhone(myPhoneField.getText());
                 output.writeObject("updatePerson");
                 output.writeObject(user);
                 String result = (String) input.readObject();
@@ -294,10 +287,7 @@ public class UserFrame  extends JFrame{
                     for (int i = 0; i < users.size(); i++) {
                         if (USER_ID == users.get(i).getId()) {
                             User updateUser = users.get(i);
-                            updateUser.setSurname(user.getSurname());
                             updateUser.setName(user.getName());
-                            updateUser.setLastname(user.getLastname());
-                            updateUser.setPhone(user.getPhone());
                             users.set(i, updateUser);
                         }
                     }
@@ -331,7 +321,6 @@ public class UserFrame  extends JFrame{
                 user.setId(USER_ID);
                 user.setLogin(myLoginField.getText());
                 user.setPassword(myPasswordField1.getText());
-                user.setWork_phone(myWorkPhoneField.getText());
                 output.writeObject("updateMyUserData");
                 output.writeObject(user);
                 String result = (String) input.readObject();
@@ -341,7 +330,6 @@ public class UserFrame  extends JFrame{
                         if (USER_ID == users.get(i).getId()) {
                             User updateUser = users.get(i);
                             updateUser.setLogin(user.getLogin());
-                            updateUser.setWork_phone(user.getWork_phone());
                             users.set(i, updateUser);
                         }
                     }
@@ -383,10 +371,7 @@ public class UserFrame  extends JFrame{
             Client client = new Client();
             client.setPassportNumber(newClientPassportNumberField.getText());
             client.setDistrict(newClientDistrictField.getText());
-            client.setSurname(newClientSurnameField.getText());
             client.setName(newClientNameField.getText());
-            client.setLastname(newClientLastnameField.getText());
-            client.setPhone(newClientPhoneField.getText());
             client.setDateOfBirth(newClientBirthDateField.getText());
             client.setAddress(newClientAddressField.getText());
             output.writeObject("insertClient");
@@ -404,10 +389,6 @@ public class UserFrame  extends JFrame{
         Client client = clients.get(workClientsTable.getSelectedRow());
         editClientPassportField.setText(client.getPassportNumber());
         editClientDistrictField.setText(client.getDistrict());
-        editClientSurnameField.setText(client.getSurname());
-        editClientNameField.setText(client.getName());
-        editClientLastnameField.setText(client.getLastname());
-        editClientPhoneField.setText(client.getPhone());
         editClientBirthDateField.setText(client.getDateOfBirth());
         editClientPassportField.setText(client.getPassportNumber());
 
@@ -424,10 +405,7 @@ public class UserFrame  extends JFrame{
                 }
                 client.setPassportNumber(editClientPassportField.getText());
                 client.setDistrict(editClientDistrictField.getText());
-                client.setSurname(editClientSurnameField.getText());
                 client.setName(editClientNameField.getText());
-                client.setLastname(editClientLastnameField.getText());
-                client.setPhone(editClientPhoneField.getText());
                 client.setDateOfBirth(editClientBirthDateField.getText());
                 client.setAddress(editClientAddressField.getText());
             }

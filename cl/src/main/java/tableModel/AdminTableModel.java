@@ -81,18 +81,10 @@ public class AdminTableModel implements TableModel {
         switch (columnIndex){
             case 0:
                 return admin.getUserId();
-            case 1:
-                return admin.getSurname();
             case 2:
                 return admin.getName();
-            case 3:
-                return admin.getLastname();
             case 4:
                 return admin.getLogin();
-            case 5:
-                return admin.getPhone();
-            case 6:
-                return admin.getWork_phone();
             case 7:
                 return admin.getRights();
             case 8:

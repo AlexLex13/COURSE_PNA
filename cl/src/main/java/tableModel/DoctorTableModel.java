@@ -84,18 +84,10 @@ public class DoctorTableModel implements TableModel{
         switch (columnIndex){
             case 0:
                 return doctor.getUserId();
-            case 1:
-                return doctor.getSurname();
             case 2:
                 return doctor.getName();
-            case 3:
-                return doctor.getLastname();
             case 4:
                 return doctor.getLogin();
-            case 5:
-                return doctor.getPhone();
-            case 6:
-                return doctor.getWork_phone();
             case 7:
                 return doctor.getPost();
             case 8:

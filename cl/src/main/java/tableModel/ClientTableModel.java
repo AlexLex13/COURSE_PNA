@@ -77,14 +77,8 @@ public class ClientTableModel implements TableModel{
         switch (columnIndex){
             case 0:
                 return client.getPassportNumber();
-            case 1:
-                return client.getSurname();
             case 2:
                 return client.getName();
-            case 3:
-                return client.getLastname();
-            case 4:
-                return client.getPhone();
             case 5:
                 return client.getDistrict();
             case 6:

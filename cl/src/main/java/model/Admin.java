@@ -13,23 +13,15 @@ public class Admin extends User implements Serializable{
         this.block = "";
     }
 
-    public Admin(int user_id, String login, String password, String role, String workPhone,
-                 String name, String surname, String lastname, String phone, int person_id,
+    public Admin(int user_id, String login, String password, String role,
+                 String name, int person_id,
                  int admin_id, String rights, String block){
         setUserId(user_id);
         setLogin(login);
         setPassword(password);
         setRole(role);
-        if(workPhone == null) workPhone="";
-        setWork_phone(workPhone);
         if(name == null) name="";
         setName(name);
-        if(surname == null) surname="";
-        setSurname(surname);
-        if(lastname == null) lastname="";
-        setLastname(lastname);
-        if(phone == null) phone="";
-        setPhone(phone);
         setPersonId(person_id);
         this.id = admin_id;
         this.rights = rights;
@@ -45,11 +37,7 @@ public class Admin extends User implements Serializable{
         setLogin(admin.getLogin());
         setPassword(admin.getPassword());
         setRole(admin.getRole());
-        setWork_phone(admin.getWork_phone());
-        setSurname(admin.getSurname());
         setName(admin.getName());
-        setLastname(admin.getLastname());
-        setPhone(admin.getPhone());
     }
 
     public Admin(int id, String rights, String block, int user_id) {

@@ -7,20 +7,19 @@ public class Admin extends User implements Serializable{
     private String rights;
     private String block;
 
-    public Admin(int id, String login, String password, String role, String name, int person_id, int admin_id, String rights, String block) {
+    public Admin() {
         this.id = -1;
         this.rights = "";
         this.block = "";
     }
 
-    public Admin(int user_id, String login, String password, String role, String workPhone,
-                 String name, String surname, String lastname, String phone, int person_id,
+    public Admin(int user_id, String login, String password, String role,
+                 String name, int person_id,
                  int admin_id, String rights, String block){
         setUserId(user_id);
         setLogin(login);
         setPassword(password);
         setRole(role);
-        if(workPhone == null) workPhone="";
         if(name == null) name="";
         setName(name);
         setPersonId(person_id);

@@ -2,15 +2,10 @@ package view;
 
 import model.*;
 import org.jfree.data.category.DefaultCategoryDataset;
-import tableModel.AdminTableModel;
-import tableModel.DoctorTableModel;
-import tableModel.UserTableModel;
 import tableModel.VisitTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -96,11 +91,7 @@ public class DoctorFrame extends JFrame{
             for(int i = 0; i < doctors.size(); i++){
                 if(USER_ID == doctors.get(i).getUserId()){
                     Doctor doctor = doctors.get(i);
-                    mySurnameField.setText(doctor.getSurname());
                     myNameField.setText(doctor.getName());
-                    myLastnameField.setText(doctor.getLastname());
-                    myPhoneField.setText(doctor.getPhone());
-                    myWorkPhoneField.setText(doctor.getWork_phone());
                     myLoginField.setText(doctor.getLogin());
                     myPasswordField1.setText(doctor.getPassword());
                     myPasswordField2.setText(doctor.getPassword());
@@ -192,10 +183,7 @@ public class DoctorFrame extends JFrame{
             try {
                 User user = new User();
                 user.setId(USER_ID);
-                user.setSurname(mySurnameField.getText());
                 user.setName(myNameField.getText());
-                user.setLastname(myLastnameField.getText());
-                user.setPhone(myPhoneField.getText());
                 output.writeObject("updatePerson");
                 output.writeObject(user);
                 String result = (String) input.readObject();
@@ -204,10 +192,7 @@ public class DoctorFrame extends JFrame{
                     for (int i = 0; i < doctors.size(); i++) {
                         if (USER_ID == doctors.get(i).getUserId()) {
                             Doctor doctor = doctors.get(i);
-                            doctor.setSurname(user.getSurname());
                             doctor.setName(user.getName());
-                            doctor.setLastname(user.getLastname());
-                            doctor.setPhone(user.getPhone());
                             doctors.set(i, doctor);
                         }
                     }
@@ -249,7 +234,6 @@ public class DoctorFrame extends JFrame{
                 user.setId(USER_ID);
                 user.setLogin(myLoginField.getText());
                 user.setPassword(myPasswordField1.getText());
-                user.setWork_phone(myWorkPhoneField.getText());
                 output.writeObject("updateMyUserData");
                 output.writeObject(user);
                 String result = (String) input.readObject();
@@ -259,7 +243,6 @@ public class DoctorFrame extends JFrame{
                         if (USER_ID == doctors.get(i).getUserId()) {
                             Doctor doctor = doctors.get(i);
                             doctor.setLogin(user.getLogin());
-                            doctor.setWork_phone(user.getWork_phone());
                             doctors.set(i, doctor);
                         }
                     }

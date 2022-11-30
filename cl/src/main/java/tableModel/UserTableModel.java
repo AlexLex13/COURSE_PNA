@@ -74,18 +74,10 @@ public class UserTableModel implements TableModel{
         switch (columnIndex){
             case 0:
                 return user.getId();
-            case 1:
-                return user.getSurname();
             case 2:
                 return user.getName();
-            case 3:
-                return user.getLastname();
             case 4:
                 return user.getLogin();
-            case 5:
-                return user.getPhone();
-            case 6:
-                return user.getWork_phone();
         }
         return null;
     }

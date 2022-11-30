@@ -35,8 +35,6 @@ public class DataBaseHandler extends DataBaseConnector {
     }
 
 
-        //---------------------ПОЛУЧЕНИЕ ВСЕЙ ТАБЛИЦЫ-----------------------------------
-
 
     public ArrayList<Admin> getAllAdmins() throws SQLException{
         try {

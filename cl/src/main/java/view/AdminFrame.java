@@ -242,11 +242,6 @@ public class AdminFrame extends JFrame{
             for(int i = 0; i < admins.size(); i++){
                 if(USER_ID == admins.get(i).getUserId()){
                     Admin admin = admins.get(i);
-                    mySurnameField.setText(admin.getSurname());
-                    myNameField.setText(admin.getName());
-                    myLastnameField.setText(admin.getLastname());
-                    myPhoneField.setText(admin.getPhone());
-                    myWorkPhoneField.setText(admin.getWork_phone());
                     myLoginField.setText(admin.getLogin());
                     myPasswordField1.setText(admin.getPassword());
                     myPasswordField2.setText(admin.getPassword());
@@ -387,10 +382,7 @@ public class AdminFrame extends JFrame{
             try {
                 User user = new User();
                 user.setId(USER_ID);
-                user.setSurname(mySurnameField.getText());
                 user.setName(myNameField.getText());
-                user.setLastname(myLastnameField.getText());
-                user.setPhone(myPhoneField.getText());
                 output.writeObject("updatePerson");
                 output.writeObject(user);
                 String result = (String) input.readObject();
@@ -399,10 +391,7 @@ public class AdminFrame extends JFrame{
                     for (int i = 0; i < admins.size(); i++) {
                         if (USER_ID == admins.get(i).getUserId()) {
                             Admin admin = admins.get(i);
-                            admin.setSurname(user.getSurname());
                             admin.setName(user.getName());
-                            admin.setLastname(user.getLastname());
-                            admin.setPhone(user.getPhone());
                             admins.set(i, admin);
                         }
                     }
@@ -436,7 +425,6 @@ public class AdminFrame extends JFrame{
                 user.setId(USER_ID);
                 user.setLogin(myLoginField.getText());
                 user.setPassword(myPasswordField1.getText());
-                user.setWork_phone(myWorkPhoneField.getText());
                 output.writeObject("updateMyUserData");
                 output.writeObject(user);
                 String result = (String) input.readObject();
@@ -446,7 +434,6 @@ public class AdminFrame extends JFrame{
                         if (USER_ID == admins.get(i).getUserId()) {
                             Admin admin = admins.get(i);
                             admin.setLogin(user.getLogin());
-                            admin.setWork_phone(user.getWork_phone());
                             admins.set(i, admin);
                         }
                     }
@@ -478,11 +465,7 @@ public class AdminFrame extends JFrame{
         else editAdminRightsComboBox.setSelectedIndex(1);
         if(admin.getBlock().equals("Нет")) editAdminBlockComboBox.setSelectedIndex(0);
         else editAdminBlockComboBox.setSelectedIndex(1);
-        editAdminSurnameField.setText(admin.getSurname());
         editAdminNameField.setText(admin.getName());
-        editAdminLastnameField.setText(admin.getLastname());
-        editAdminPhoneField.setText(admin.getPhone());
-        editAdminWorkPhoneField.setText(admin.getWork_phone());
         editAdminPasswordField1.setText(admin.getPassword());
         editAdminPasswordField2.setText(admin.getPassword());
     }
@@ -490,11 +473,7 @@ public class AdminFrame extends JFrame{
     private void tableUsersMouseClickedActionPerformed(){
         User user = users.get(tableUsers.getSelectedRow());
         editUserLoginField.setText(user.getLogin());
-        editUserSurnameField.setText(user.getSurname());
         editUserNameField.setText(user.getName());
-        editUserLastnameField.setText(user.getLastname());
-        editUserPhoneField.setText(user.getPhone());
-        editUserWorkPhoneField.setText(user.getWork_phone());
         editUserPasswordField1.setText(user.getPassword());
         editUserPasswordField2.setText(user.getPassword());
     }
@@ -505,11 +484,7 @@ public class AdminFrame extends JFrame{
         editDoctorPostField.setText(doctor.getPost());
         editDoctorRoomField.setText(doctor.getRoom());
         editDoctorDistrictField.setText(doctor.getDistrict());
-        editDoctorSurnameField.setText(doctor.getSurname());
         editDoctorNameField.setText(doctor.getName());
-        editDoctorLastnameField.setText(doctor.getLastname());
-        editDoctorPhoneField.setText(doctor.getPhone());
-        editDoctorWorkPhoneField.setText(doctor.getWork_phone());
         editDoctorPasswordField1.setText(doctor.getPassword());
         editDoctorPasswordField2.setText(doctor.getPassword());
 
@@ -557,11 +532,7 @@ public class AdminFrame extends JFrame{
             admin.setPassword(newAdminPasswordField1.getText());
             admin.setRights(String.valueOf(newAdminRightsComboBox.getSelectedItem()));
             admin.setBlock(String.valueOf(newAdminBlockComboBox.getSelectedItem()));
-            admin.setSurname(newAdminSurnameField.getText());
             admin.setName(newAdminNameField.getText());
-            admin.setLastname(newAdminLastnameField.getText());
-            admin.setPhone(newAdminPhoneField.getText());
-            admin.setWork_phone(newAdminWorkPhoneField.getText());
             admin.setRole("admin");
             output.writeObject("insertAdmin");
             output.writeObject(admin);
@@ -585,11 +556,7 @@ public class AdminFrame extends JFrame{
             User user = new User();
             user.setLogin(newUserLoginField.getText());
             user.setPassword(newUserPasswordField1.getText());
-            user.setSurname(newUserSurnameField.getText());
             user.setName(newUserNameField.getText());
-            user.setLastname(newUserLastnameField.getText());
-            user.setPhone(newUserPhoneField.getText());
-            user.setWork_phone(newUserWorkPhoneField.getText());
             user.setRole("user");
             output.writeObject("insertUser");
             output.writeObject(user);
@@ -628,12 +595,7 @@ public class AdminFrame extends JFrame{
             doctor.setPost(newDoctorPostField.getText());
             doctor.setRoom(newDoctorRoomField.getText());
             doctor.setDistrict(newDoctorDistrictField.getText());
-            doctor.setSurname(newDoctorSurnameField.getText());
             doctor.setName(newDoctorNameField.getText());
-            doctor.setLastname(newDoctorLastnameField.getText());
-            doctor.setPhone(newDoctorPhoneField.getText());
-            doctor.setWork_phone(newDoctorWorkPhoneField.getText());
-            doctor.setRole("doctor");
             output.writeObject("insertDoctor");
             output.writeObject(doctor);
             String result = (String) input.readObject();
@@ -791,11 +753,7 @@ public class AdminFrame extends JFrame{
                 admin.setLogin(editAdminLoginField.getText());
                 admin.setRights(String.valueOf(editAdminRightsComboBox.getSelectedItem()));
                 admin.setBlock(String.valueOf(editAdminBlockComboBox.getSelectedItem()));
-                admin.setSurname(editAdminSurnameField.getText());
                 admin.setName(editAdminNameField.getText());
-                admin.setLastname(editAdminLastnameField.getText());
-                admin.setPhone(editAdminPhoneField.getText());
-                admin.setWork_phone(editAdminWorkPhoneField.getText());
             }
             catch (Exception ex){
                 JOptionPane.showMessageDialog(null, "Нужно выбрать пользователя из списка!" , "Ошибка", JOptionPane.ERROR_MESSAGE);
@@ -824,11 +782,7 @@ public class AdminFrame extends JFrame{
                     if(!checkLogin(editUserLoginField.getText())) return;
                 }
                 user.setLogin(editUserLoginField.getText());
-                user.setSurname(editUserSurnameField.getText());
                 user.setName(editUserNameField.getText());
-                user.setLastname(editUserLastnameField.getText());
-                user.setPhone(editUserPhoneField.getText());
-                user.setWork_phone(editUserWorkPhoneField.getText());
             }
             catch (Exception ex){
                 JOptionPane.showMessageDialog(null, "Нужно выбрать пользователя из списка!" , "Ошибка", JOptionPane.ERROR_MESSAGE);
@@ -860,11 +814,7 @@ public class AdminFrame extends JFrame{
                 doctor.setPost(editDoctorPostField.getText());
                 doctor.setRoom(editDoctorRoomField.getText());
                 doctor.setDistrict(editDoctorDistrictField.getText());
-                doctor.setSurname(editDoctorSurnameField.getText());
                 doctor.setName(editDoctorNameField.getText());
-                doctor.setLastname(editDoctorLastnameField.getText());
-                doctor.setPhone(editDoctorPhoneField.getText());
-                doctor.setWork_phone(editDoctorWorkPhoneField.getText());
             }
             catch (Exception ex){
                 JOptionPane.showMessageDialog(null, "Нужно выбрать доктора из списка!" , "Ошибка", JOptionPane.ERROR_MESSAGE);

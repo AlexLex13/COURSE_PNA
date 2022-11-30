@@ -130,6 +130,7 @@ class ServerClientThread extends Thread {
                 }
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             System.out.println("Client number " + clientNumber + " exit!");
         }
     }

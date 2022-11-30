@@ -24,7 +24,7 @@ public class VisitTableModel implements TableModel{
     public String getSurname(Visits visit){
         for (int i = 0; i < clients.size(); i++) {
             if (visit.getClient_id() == clients.get(i).getId()) {
-                return clients.get(i).getSurname();
+                return clients.get(i).getName();
             }
         }
         return "";
