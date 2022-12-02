@@ -16,19 +16,13 @@ import java.util.ArrayList;
 
 public class UserFrame  extends JFrame{
     private JPanel mainPanel;
-    private JTabbedPane tabbedPane1;
     private JButton closeFrameButton;
-    private JTextField mySurnameField;
     private JTextField myNameField;
-    private JTextField myLastnameField;
-    private JTextField myPhoneField;
     private JButton editMyPersonalDataButton;
-    private JTextField myWorkPhoneField;
     private JTextField myLoginField;
     private JPasswordField myPasswordField1;
     private JPasswordField myPasswordField2;
     private JButton editMyAuthorizationDataButton;
-    private JTabbedPane tabbedPane2;
     private JTable workClientsTable;
     private JTable recordClientsTable;
     private JTable recordDoctorsTable;
@@ -40,10 +34,7 @@ public class UserFrame  extends JFrame{
     private JButton clearNewClientFormButton;
     private JTextField newClientPassportNumberField;
     private JTextField newClientDistrictField;
-    private JTextField newClientSurnameField;
     private JTextField newClientNameField;
-    private JTextField newClientLastnameField;
-    private JTextField newClientPhoneField;
     private JTextField newClientBirthDateField;
     private JTextField newClientAddressField;
     private JButton editClientButton;
@@ -51,21 +42,20 @@ public class UserFrame  extends JFrame{
     private JButton deleteClientButton;
     private JTextField editClientPassportField;
     private JTextField editClientDistrictField;
-    private JTextField editClientSurnameField;
     private JTextField editClientNameField;
-    private JTextField editClientLastnameField;
-    private JTextField editClientPhoneField;
     private JTextField editClientBirthDateField;
     private JTextField editClientAddressField;
-    private JScrollPane workClientsTab;
     private JButton printCheckButton;
     private JButton statsButton;
+    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPane2;
+    private JScrollPane workClientsTab;
     private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Doctor> doctors = new ArrayList<>();
-    private ArrayList<Doctor> currentdoctors = new ArrayList<>();
+    private ArrayList<Doctor> currentDoctors = new ArrayList<>();
     private ArrayList<Visits> visits = new ArrayList<>();
-    private ArrayList<Schedule> currentschedule = new ArrayList<>();
+    private ArrayList<Schedule> currentSchedule = new ArrayList<>();
     private ArrayList<Client> clients = new ArrayList<>();
     private final ObjectOutputStream output = MainFrame.output;
     private final ObjectInputStream input = MainFrame.input;
@@ -175,11 +165,11 @@ public class UserFrame  extends JFrame{
         TableModel clientsModel = new ClientTableModel(clients);
         workClientsTable.setModel(clientsModel);
         recordClientsTable.setModel(clientsModel);
-        currentschedule.clear();
-        TableModel scheduleModel = new addRecordTableModel(currentschedule);
+        currentSchedule.clear();
+        TableModel scheduleModel = new addRecordTableModel(currentSchedule);
         addScheduleTable.setModel(scheduleModel);
-        currentdoctors.clear();
-        TableModel doctorsModel = new DoctorTableModel(currentdoctors);
+        currentDoctors.clear();
+        TableModel doctorsModel = new DoctorTableModel(currentDoctors);
         recordDoctorsTable.setModel(doctorsModel);
         TableModel visitsModel = new VisitTableModel(visits, clients);
         recordsTable.setModel(visitsModel);
@@ -257,10 +247,7 @@ public class UserFrame  extends JFrame{
     private void clearEditAndPasswordForm(){
         editClientPassportField.setText("");
         editClientDistrictField.setText("");
-        editClientSurnameField.setText("");
         editClientNameField.setText("");
-        editClientLastnameField.setText("");
-        editClientPhoneField.setText("");
         editClientBirthDateField.setText("");
         editClientAddressField.setText("");
     }
@@ -274,7 +261,7 @@ public class UserFrame  extends JFrame{
     }
 
     private void editMyPersonalDataActionPerformed(){
-        if(mySurnameField.isEditable()) {
+        if(myNameField.isEditable()) {
             try {
                 User user = new User();
                 user.setId(USER_ID);
@@ -295,17 +282,11 @@ public class UserFrame  extends JFrame{
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
-            mySurnameField.setEditable(false);
             myNameField.setEditable(false);
-            myLastnameField.setEditable(false);
-            myPhoneField.setEditable(false);
             editMyPersonalDataButton.setText("Редактировать личные данные");
         }
         else{
-            mySurnameField.setEditable(true);
             myNameField.setEditable(true);
-            myLastnameField.setEditable(true);
-            myPhoneField.setEditable(true);
             editMyPersonalDataButton.setText("Сохранить");
         }
     }
@@ -341,14 +322,12 @@ public class UserFrame  extends JFrame{
             myLoginField.setEditable(false);
             myPasswordField1.setEditable(false);
             myPasswordField2.setEditable(false);
-            myWorkPhoneField.setEditable(false);
             editMyAuthorizationDataButton.setText("Редактировать данные авторизации");
         }
         else{
             myLoginField.setEditable(true);
             myPasswordField1.setEditable(true);
             myPasswordField2.setEditable(true);
-            myWorkPhoneField.setEditable(true);
             editMyAuthorizationDataButton.setText("Сохранить");
         }
     }
@@ -356,10 +335,7 @@ public class UserFrame  extends JFrame{
     private void clearNewClientFormActionPerformed(){
         newClientPassportNumberField.setText("");
         newClientDistrictField.setText("");
-        newClientSurnameField.setText("");
         newClientNameField.setText("");
-        newClientLastnameField.setText("");
-        newClientPhoneField.setText("");
         newClientBirthDateField.setText("");
         newClientAddressField.setText("");
     }
@@ -425,27 +401,27 @@ public class UserFrame  extends JFrame{
 
     private void recordClientsTableActionPerformed(){
         Client client = clients.get(recordClientsTable.getSelectedRow());
-        currentdoctors.clear();
+        currentDoctors.clear();
         for(int i = 0; i < doctors.size(); i++){
             if(client.getDistrict().equals(doctors.get(i).getDistrict())){
-                currentdoctors.add(doctors.get(i));
+                currentDoctors.add(doctors.get(i));
             }
         }
-        TableModel doctorsModel = new DoctorTableModel(currentdoctors);
+        TableModel doctorsModel = new DoctorTableModel(currentDoctors);
         recordDoctorsTable.setModel(doctorsModel);
-        currentschedule.clear();
-        TableModel scheduleModel = new addRecordTableModel(currentschedule);
+        currentSchedule.clear();
+        TableModel scheduleModel = new addRecordTableModel(currentSchedule);
         addScheduleTable.setModel(scheduleModel);
     }
 
     private void recordDoctorsTableActionPerformed(){
-        Doctor doctor = currentdoctors.get(recordDoctorsTable.getSelectedRow());
+        Doctor doctor = currentDoctors.get(recordDoctorsTable.getSelectedRow());
         try{
             output.writeObject("getRecordsSchedule");
             output.writeObject(doctor);
-            currentschedule.clear();
-            currentschedule = (ArrayList<Schedule>) input.readObject();
-            TableModel scheduleModel = new addRecordTableModel(currentschedule);
+            currentSchedule.clear();
+            currentSchedule = (ArrayList<Schedule>) input.readObject();
+            TableModel scheduleModel = new addRecordTableModel(currentSchedule);
             addScheduleTable.setModel(scheduleModel);
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
@@ -454,8 +430,8 @@ public class UserFrame  extends JFrame{
 
     private void addRecordButtonActionPerformed(){
         Client client = clients.get(recordClientsTable.getSelectedRow());
-        Doctor doctor = currentdoctors.get(recordDoctorsTable.getSelectedRow());
-        Schedule schedule = currentschedule.get(addScheduleTable.getSelectedRow());
+        Doctor doctor = currentDoctors.get(recordDoctorsTable.getSelectedRow());
+        Schedule schedule = currentSchedule.get(addScheduleTable.getSelectedRow());
         Visits visit = new Visits();
         try{
             if(schedule.getPassportNumber() == null || schedule.getPassportNumber().equals("")){

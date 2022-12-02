@@ -20,9 +20,7 @@ public class AdminFrame extends JFrame{
     private JPanel mainPanel;
     private JTabbedPane newDoctor;
     private JButton closeFrameButton;
-    private JTextField mySurnameField;
     private JTextField myNameField;
-    private JTextField myLastnameField;
     private JButton editMyPersonalDataButton;
     private JTextField myLoginField;
     private JPasswordField myPasswordField1;
@@ -31,12 +29,7 @@ public class AdminFrame extends JFrame{
     private JTextField myRightsField;
     private JTextField myBlockField;
     private JTable tableAdmins;
-    private JTabbedPane tabbedPane1;
     private JTable tableUsers;
-    private JTabbedPane tabbedPane2;
-    private JTabbedPane tabbedPane3;
-    private JTextField myPhoneField;
-    private JTextField myWorkPhoneField;
     private JButton addNewAdminButton;
     private JButton clearNewAdminFormButton;
     private JTextField newAdminLoginField;
@@ -44,21 +37,13 @@ public class AdminFrame extends JFrame{
     private JPasswordField newAdminPasswordField2;
     private JComboBox newAdminRightsComboBox;
     private JComboBox newAdminBlockComboBox;
-    private JTextField newAdminSurnameField;
     private JTextField newAdminNameField;
-    private JTextField newAdminLastnameField;
-    private JTextField newAdminPhoneField;
-    private JTextField newAdminWorkPhoneField;
     private JCheckBox deleteAdminCheckBox;
     private JButton deleteAdminButton;
     private JTextField editAdminLoginField;
     private JComboBox editAdminRightsComboBox;
     private JComboBox editAdminBlockComboBox;
-    private JTextField editAdminSurnameField;
     private JTextField editAdminNameField;
-    private JTextField editAdminLastnameField;
-    private JTextField editAdminPhoneField;
-    private JTextField editAdminWorkPhoneField;
     private JButton editAdminButton;
     private JPasswordField editAdminPasswordField1;
     private JPasswordField editAdminPasswordField2;
@@ -68,19 +53,11 @@ public class AdminFrame extends JFrame{
     private JTextField newUserLoginField;
     private JPasswordField newUserPasswordField1;
     private JPasswordField newUserPasswordField2;
-    private JTextField newUserSurnameField;
     private JTextField newUserNameField;
-    private JTextField newUserLastnameField;
-    private JTextField newUserPhoneField;
-    private JTextField newUserWorkPhoneField;
     private JButton addNewUserButton;
     private JButton clearNewUserFormButton;
     private JTextField editUserLoginField;
-    private JTextField editUserSurnameField;
     private JTextField editUserNameField;
-    private JTextField editUserLastnameField;
-    private JTextField editUserPhoneField;
-    private JTextField editUserWorkPhoneField;
     private JButton editUserButton;
     private JPasswordField editUserPasswordField1;
     private JPasswordField editUserPasswordField2;
@@ -96,27 +73,22 @@ public class AdminFrame extends JFrame{
     private JTextField newDoctorPostField;
     private JTextField newDoctorRoomField;
     private JTextField newDoctorDistrictField;
-    private JTextField newDoctorSurnameField;
     private JTextField newDoctorNameField;
-    private JTextField newDoctorLastnameField;
-    private JTextField newDoctorPhoneField;
-    private JTextField newDoctorWorkPhoneField;
     private JButton editDoctorButton;
     private JTextField editDoctorLoginField;
     private JTextField editDoctorPostField;
     private JTextField editDoctorRoomField;
     private JTextField editDoctorDistrictField;
-    private JTextField editDoctorSurnameField;
     private JTextField editDoctorNameField;
-    private JTextField editDoctorLastnameField;
-    private JTextField editDoctorPhoneField;
-    private JTextField editDoctorWorkPhoneField;
     private JPasswordField editDoctorPasswordField1;
     private JPasswordField editDoctorPasswordField2;
     private JButton editDoctorPasswordButton;
     private JCheckBox deleteDoctorCheckBox;
     private JButton deleteDoctorButton;
     private JButton editDoctorScheduleButton;
+    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPane2;
+    private JTabbedPane tabbedPane3;
     private JComboBox moIn;
     private JComboBox moOut;
     private JComboBox tuIn;
@@ -276,20 +248,12 @@ public class AdminFrame extends JFrame{
         editAdminLoginField.setText("");
         editAdminRightsComboBox.setSelectedIndex(0);
         editAdminBlockComboBox.setSelectedIndex(0);
-        editAdminSurnameField.setText("");
         editAdminNameField.setText("");
-        editAdminLastnameField.setText("");
-        editAdminPhoneField.setText("");
-        editAdminWorkPhoneField.setText("");
         editAdminPasswordField1.setText("");
         editAdminPasswordField2.setText("");
 
         editUserLoginField.setText("");
-        editUserSurnameField.setText("");
         editUserNameField.setText("");
-        editUserLastnameField.setText("");
-        editUserPhoneField.setText("");
-        editUserWorkPhoneField.setText("");
         editUserPasswordField1.setText("");
         editUserPasswordField2.setText("");
 
@@ -297,11 +261,7 @@ public class AdminFrame extends JFrame{
         editDoctorPostField.setText("");
         editDoctorRoomField.setText("");
         editDoctorDistrictField.setText("");
-        editDoctorSurnameField.setText("");
         editDoctorNameField.setText("");
-        editDoctorLastnameField.setText("");
-        editDoctorPhoneField.setText("");
-        editDoctorWorkPhoneField.setText("");
         editDoctorPasswordField1.setText("");
         editDoctorPasswordField2.setText("");
 
@@ -331,20 +291,20 @@ public class AdminFrame extends JFrame{
             JOptionPane.showMessageDialog(null, "Логин должен быть больше 4 и меньше 15 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
-            for (int i = 0; i < admins.size(); i++) {
-                if (login.equals(admins.get(i).getLogin())) {
+            for (Admin admin : admins) {
+                if (login.equals(admin.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
-            for (int i = 0; i < users.size(); i++) {
-                if (login.equals(users.get(i).getLogin())) {
+            for (User user : users) {
+                if (login.equals(user.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
-            for (int i = 0; i < doctors.size(); i++) {
-                if (login.equals(doctors.get(i).getLogin())) {
+            for (Doctor doctor : doctors) {
+                if (login.equals(doctor.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
@@ -378,7 +338,7 @@ public class AdminFrame extends JFrame{
     }
 
     private void editMyPersonalDataActionPerformed(){
-        if(mySurnameField.isEditable()) {
+        if(myNameField.isEditable()) {
             try {
                 User user = new User();
                 user.setId(USER_ID);
@@ -399,17 +359,11 @@ public class AdminFrame extends JFrame{
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
-            mySurnameField.setEditable(false);
             myNameField.setEditable(false);
-            myLastnameField.setEditable(false);
-            myPhoneField.setEditable(false);
             editMyPersonalDataButton.setText("Редактировать личные данные");
         }
         else{
-            mySurnameField.setEditable(true);
             myNameField.setEditable(true);
-            myLastnameField.setEditable(true);
-            myPhoneField.setEditable(true);
             editMyPersonalDataButton.setText("Сохранить");
         }
     }
@@ -445,14 +399,12 @@ public class AdminFrame extends JFrame{
             myLoginField.setEditable(false);
             myPasswordField1.setEditable(false);
             myPasswordField2.setEditable(false);
-            myWorkPhoneField.setEditable(false);
             editMyAuthorizationDataButton.setText("Редактировать данные авторизации");
         }
         else{
             myLoginField.setEditable(true);
             myPasswordField1.setEditable(true);
             myPasswordField2.setEditable(true);
-            myWorkPhoneField.setEditable(true);
             editMyAuthorizationDataButton.setText("Сохранить");
         }
     }
@@ -614,22 +566,14 @@ public class AdminFrame extends JFrame{
         newAdminPasswordField2.setText("");
         newAdminRightsComboBox.setSelectedIndex(0);
         newAdminBlockComboBox.setSelectedIndex(0);
-        newAdminSurnameField.setText("");
         newAdminNameField.setText("");
-        newAdminLastnameField.setText("");
-        newAdminPhoneField.setText("");
-        newAdminWorkPhoneField.setText("");
     }
 
     private void clearNewUserFormActionPerformed(){
         newUserLoginField.setText("");
         newUserPasswordField1.setText("");
         newUserPasswordField2.setText("");
-        newUserSurnameField.setText("");
         newUserNameField.setText("");
-        newUserLastnameField.setText("");
-        newUserPhoneField.setText("");
-        newUserWorkPhoneField.setText("");
     }
 
     private void clearNewDoctorFormActionPerformed(){
@@ -639,11 +583,7 @@ public class AdminFrame extends JFrame{
         newDoctorPostField.setText("");
         newDoctorRoomField.setText("");
         newDoctorDistrictField.setText("");
-        newDoctorSurnameField.setText("");
         newDoctorNameField.setText("");
-        newDoctorLastnameField.setText("");
-        newDoctorPhoneField.setText("");
-        newDoctorWorkPhoneField.setText("");
     }
 
 
