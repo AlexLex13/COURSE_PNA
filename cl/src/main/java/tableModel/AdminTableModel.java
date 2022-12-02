@@ -31,43 +31,23 @@ public class AdminTableModel implements TableModel {
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "ID";
-            case 1:
-                return "Фамилия";
-            case 2:
-                return "Имя";
-            case 3:
-                return "Отчество";
-            case 4:
-                return "Логин";
-            case 5:
-                return "Личный телефон";
-            case 6:
-                return "Рабочий телефон";
-            case 7:
-                return "Права доступа";
-            case 8:
-                return "Блокировка";
-        }
-        return "";
+        return switch (columnIndex) {
+            case 0 -> "ID";
+            case 1 -> "Имя";
+            case 4 -> "Логин";
+            case 7 -> "Права доступа";
+            case 8 -> "Блокировка";
+            default -> "";
+        };
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0: return Integer.class;
-            case 1: return String.class;
-            case 2: return String.class;
-            case 3: return String.class;
-            case 4: return String.class;
-            case 5: return String.class;
-            case 6: return String.class;
-            case 7: return String.class;
-            case 8: return String.class;
-            default: return Object.class;
-        }
+        return switch (columnIndex) {
+            case 0 -> Integer.class;
+            case 1, 2, 3, 4, 5, 6, 7, 8 -> String.class;
+            default -> Object.class;
+        };
     }
 
     @Override
@@ -78,19 +58,14 @@ public class AdminTableModel implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Admin admin = admins.get(rowIndex);
-        switch (columnIndex){
-            case 0:
-                return admin.getUserId();
-            case 2:
-                return admin.getName();
-            case 4:
-                return admin.getLogin();
-            case 7:
-                return admin.getRights();
-            case 8:
-                return admin.getBlock();
-        }
-        return null;
+        return switch (columnIndex) {
+            case 0 -> admin.getUserId();
+            case 2 -> admin.getName();
+            case 4 -> admin.getLogin();
+            case 7 -> admin.getRights();
+            case 8 -> admin.getBlock();
+            default -> null;
+        };
     }
 
     @Override

@@ -252,7 +252,7 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public ArrayList<Visits> getAllVisitsDoctor(Doctor doctor){
         try {
-            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT * FROM \"Visit\" WHERE date>=curdate() AND doctor_id='%d';", doctor.getId()));
+            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT * FROM \"Visit\" WHERE date>=NOW() AND doctor_id='%d';", doctor.getId()));
             ArrayList<Visits> visitsList = new ArrayList<>();
             while(rs.next()){
                 Visits visit = new Visits(
@@ -290,10 +290,7 @@ public class DataBaseHandler extends DataBaseConnector {
                 result += rs.getString("passport_id") + "#";
                 result += rs.getString("room") + "#";
                 result += rs.getString("post") + "#";
-                result += rs.getString("surname") + "#";
                 result += rs.getString("name") + "#";
-                result += rs.getString("lastname") + "#";
-                result += rs.getString("work_phone") + "#";
                 return result;
             }
         }catch (Exception ex){
@@ -342,7 +339,7 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public String addVisit(Visits visit){
         String[] addData = {
-                String.format("INSERT INTO \"Visit\" (registration_date, date, time, comment, doctor_id, client_id) VALUES(CURDATE(), '%s', '%s', '%s', '%d', '%d');", visit.getDate(), visit.getTime(), visit.getComment(), visit.getDoctor_id(), visit.getClient_id())
+                String.format("INSERT INTO \"Visit\" (registration_date, date, time, comment, doctor_id, client_id) VALUES(NOW(), '%s', '%s', '%s', '%d', '%d');", visit.getDate(), visit.getTime(), visit.getComment(), visit.getDoctor_id(), visit.getClient_id())
         };
         return addData(addData);
     }

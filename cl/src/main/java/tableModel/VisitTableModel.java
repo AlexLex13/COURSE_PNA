@@ -44,31 +44,22 @@ public class VisitTableModel implements TableModel{
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "Дата";
-            case 1:
-                return "Время";
-            case 2:
-                return "Дата регистрации";
-            case 3:
-                return "Фамилия";
-            case 4:
-                return "Комментарий";
-        }
-        return "";
+        return switch (columnIndex) {
+            case 0 -> "Дата";
+            case 1 -> "Время";
+            case 2 -> "Дата регистрации";
+            case 3 -> "Имя";
+            case 4 -> "Комментарий";
+            default -> "";
+        };
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0: return String.class;
-            case 1: return String.class;
-            case 2: return String.class;
-            case 3: return String.class;
-            case 4: return String.class;
-            default: return Object.class;
-        }
+        return switch (columnIndex) {
+            case 0, 1, 2, 3, 4 -> String.class;
+            default -> Object.class;
+        };
     }
 
     @Override
@@ -79,19 +70,14 @@ public class VisitTableModel implements TableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Visits visit = visits.get(rowIndex);
-        switch (columnIndex){
-            case 0:
-                return visit.getDate();
-            case 1:
-                return visit.getTime();
-            case 2:
-                return visit.getRegistrationDate();
-            case 3:
-                return getSurname(visit);
-            case 4:
-                return visit.getComment();
-        }
-        return null;
+        return switch (columnIndex) {
+            case 0 -> visit.getDate();
+            case 1 -> visit.getTime();
+            case 2 -> visit.getRegistrationDate();
+            case 3 -> getSurname(visit);
+            case 4 -> visit.getComment();
+            default -> null;
+        };
     }
 
     @Override

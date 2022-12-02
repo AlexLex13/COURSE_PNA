@@ -31,39 +31,24 @@ public class DoctorTableModel implements TableModel{
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "ID";
-            case 1:
-                return "Фамилия";
-            case 2:
-                return "Имя";
-            case 3:
-                return "Отчество";
-            case 4:
-                return "Логин";
-            case 5:
-                return "Личный телефон";
-            case 6:
-                return "Рабочий телефон";
-            case 7:
-                return "Должность";
-            case 8:
-                return "Кабинет";
-            case 9:
-                return "Участок";
-        }
-        return "";
+        return switch (columnIndex) {
+            case 0 -> "ID";
+            case 1 -> "Имя";
+            case 3 -> "Логин";
+            case 7 -> "Должность";
+            case 8 -> "Кабинет";
+            case 9 -> "Участок";
+            default -> "";
+        };
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0: return Integer.class;
-            case 1, 2, 3, 4, 5, 6, 7, 8, 9:
-                return String.class;
-            default: return Object.class;
-        }
+        return switch (columnIndex) {
+            case 0 -> Integer.class;
+            case 1, 2, 3, 4, 5, 6, 7, 8, 9 -> String.class;
+            default -> Object.class;
+        };
     }
 
     @Override
@@ -74,21 +59,15 @@ public class DoctorTableModel implements TableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Doctor doctor = doctors.get(rowIndex);
-        switch (columnIndex){
-            case 0:
-                return doctor.getUserId();
-            case 2:
-                return doctor.getName();
-            case 4:
-                return doctor.getLogin();
-            case 7:
-                return doctor.getPost();
-            case 8:
-                return doctor.getRoom();
-            case 9:
-                return doctor.getDistrict();
-        }
-        return null;
+        return switch (columnIndex) {
+            case 0 -> doctor.getUserId();
+            case 2 -> doctor.getName();
+            case 4 -> doctor.getLogin();
+            case 7 -> doctor.getPost();
+            case 8 -> doctor.getRoom();
+            case 9 -> doctor.getDistrict();
+            default -> null;
+        };
     }
 
     @Override

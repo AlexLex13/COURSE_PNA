@@ -30,37 +30,21 @@ public class UserTableModel implements TableModel{
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "ID";
-            case 1:
-                return "Фамилия";
-            case 2:
-                return "Имя";
-            case 3:
-                return "Отчество";
-            case 4:
-                return "Логин";
-            case 5:
-                return "Личный телефон";
-            case 6:
-                return "Рабочий телефон";
-        }
-        return "";
+        return switch (columnIndex) {
+            case 0 -> "ID";
+            case 1 -> "Имя";
+            case 3 -> "Логин";
+            default -> "";
+        };
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0: return Integer.class;
-            case 1: return String.class;
-            case 2: return String.class;
-            case 3: return String.class;
-            case 4: return String.class;
-            case 5: return String.class;
-            case 6: return String.class;
-            default: return Object.class;
-        }
+        return switch (columnIndex) {
+            case 0 -> Integer.class;
+            case 1, 2, 3, 4, 5, 6 -> String.class;
+            default -> Object.class;
+        };
     }
 
     @Override
@@ -71,15 +55,12 @@ public class UserTableModel implements TableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         User user = users.get(rowIndex);
-        switch (columnIndex){
-            case 0:
-                return user.getId();
-            case 2:
-                return user.getName();
-            case 4:
-                return user.getLogin();
-        }
-        return null;
+        return switch (columnIndex) {
+            case 0 -> user.getId();
+            case 2 -> user.getName();
+            case 4 -> user.getLogin();
+            default -> null;
+        };
     }
 
     @Override

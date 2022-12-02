@@ -30,40 +30,22 @@ public class ClientTableModel implements TableModel{
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "Номер паспорта";
-            case 1:
-                return "Фамилия";
-            case 2:
-                return "Имя";
-            case 3:
-                return "Отчество";
-            case 4:
-                return "Телефон";
-            case 5:
-                return "Участок";
-            case 6:
-                return "Дата рождения";
-            case 7:
-                return "Адрес";
-        }
-        return "";
+        return switch (columnIndex) {
+            case 0 -> "Номер паспорта";
+            case 1 -> "Имя";
+            case 5 -> "Участок";
+            case 6 -> "Дата рождения";
+            case 7 -> "Адрес";
+            default -> "";
+        };
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0: return String.class;
-            case 1: return String.class;
-            case 2: return String.class;
-            case 3: return String.class;
-            case 4: return String.class;
-            case 5: return String.class;
-            case 6: return String.class;
-            case 7: return String.class;
-            default: return Object.class;
-        }
+        return switch (columnIndex) {
+            case 0, 1, 2, 3, 4, 5, 6, 7 -> String.class;
+            default -> Object.class;
+        };
     }
 
     @Override
@@ -74,19 +56,14 @@ public class ClientTableModel implements TableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Client client = clients.get(rowIndex);
-        switch (columnIndex){
-            case 0:
-                return client.getPassportNumber();
-            case 2:
-                return client.getName();
-            case 5:
-                return client.getDistrict();
-            case 6:
-                return client.getDateOfBirth();
-            case 7:
-                return client.getAddress();
-        }
-        return null;
+        return switch (columnIndex) {
+            case 0 -> client.getPassportNumber();
+            case 2 -> client.getName();
+            case 5 -> client.getDistrict();
+            case 6 -> client.getDateOfBirth();
+            case 7 -> client.getAddress();
+            default -> null;
+        };
     }
 
     @Override
