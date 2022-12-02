@@ -86,36 +86,17 @@ public class AdminFrame extends JFrame{
     private JCheckBox deleteDoctorCheckBox;
     private JButton deleteDoctorButton;
     private JButton editDoctorScheduleButton;
-    private JTabbedPane tabbedPane1;
-    private JTabbedPane tabbedPane2;
-    private JTabbedPane tabbedPane3;
-    private JComboBox moIn;
-    private JComboBox moOut;
-    private JComboBox tuIn;
-    private JComboBox tuOut;
-    private JComboBox weIn;
-    private JComboBox weOut;
-    private JComboBox thIn;
-    private JComboBox thOut;
-    private JComboBox frIn;
-    private JComboBox frOut;
-    private JComboBox saIn;
-    private JComboBox saOut;
-    private JComboBox suIn;
-    private JComboBox suOut;
+    private JTabbedPane tabbedPane1, tabbedPane2, tabbedPane3;
+    private JComboBox moIn, moOut, tuIn, tuOut, weIn, weOut, thIn, thOut, frIn, frOut, saIn, saOut, suIn, suOut;
     private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Doctor> doctors = new ArrayList<>();
-    private ObjectOutputStream output = MainFrame.output;
-    private ObjectInputStream input = MainFrame.input;
-    private int USER_ID;
+    private final ObjectOutputStream output = MainFrame.output;
+    private final ObjectInputStream input = MainFrame.input;
+    private final int USER_ID;
     private String rights;
     private String block;
 
-    //-------------------------------ИНИЦИАЛИЗАЦИЯ ФРЕЙМА-------------------------------
-
-
-    @SuppressWarnings("unchecked")
     private void initComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Администратор");
@@ -133,16 +114,13 @@ public class AdminFrame extends JFrame{
         tableDoctors.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         pack();
         setLocationRelativeTo(null);
-        for (int i = 0; i < admins.size(); i++) {
-            if (USER_ID == admins.get(i).getUserId()) {
-                rights = admins.get(i).getRights();
-                block = admins.get(i).getBlock();
+        for (Admin admin : admins) {
+            if (USER_ID == admin.getUserId()) {
+                rights = admin.getRights();
+                block = admin.getBlock();
             }
         }
     }
-
-
-    //-------------------------------КОНСТРУКТОР ФРЕЙМА-------------------------------
 
 
     public AdminFrame(int user_id){
@@ -195,9 +173,6 @@ public class AdminFrame extends JFrame{
             }
         });
     }
-
-
-    //-------------------------------ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ-------------------------------
 
     private void isBlock(){
         if(block.equals("Да")) {
@@ -328,9 +303,6 @@ public class AdminFrame extends JFrame{
         }
         else return true;
     }
-
-
-    //-------------------------------ФУНКЦИИ-СЛУШАТЕЛИ-------------------------------
 
     private void closeFrameActionPerformed(){
         new MainFrame().setVisible(true);
@@ -647,8 +619,8 @@ public class AdminFrame extends JFrame{
     private void statsAdminBlockActionPerformed(){
         int notBlock = 0;
         int block = 0;
-        for(int i = 0; i < admins.size(); i++){
-            if(admins.get(i).getBlock().equals("Нет")) notBlock++;
+        for (Admin admin : admins) {
+            if (admin.getBlock().equals("Нет")) notBlock++;
             else block++;
         }
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
@@ -661,8 +633,8 @@ public class AdminFrame extends JFrame{
     private void statsAdminRightsActionPerformed(){
         int full = 0;
         int read = 0;
-        for(int i = 0; i < admins.size(); i++){
-            if(admins.get(i).getRights().equals("Полные")) full++;
+        for (Admin admin : admins) {
+            if (admin.getRights().equals("Полные")) full++;
             else read++;
         }
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
@@ -875,7 +847,7 @@ public class AdminFrame extends JFrame{
                 JOptionPane.showMessageDialog(null, "Нужно выбрать доктора из списка!" , "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            String newSchedule[] = new String[14];
+            String[] newSchedule = new String[14];
             newSchedule[0] = (String)moIn.getSelectedItem();
             if(moIn.getSelectedIndex() != 0) newSchedule[1] = (String)moOut.getSelectedItem();
             else newSchedule[1] = "";

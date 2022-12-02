@@ -4,7 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MultiThreadServer {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         try {
             ServerSocket server = new ServerSocket(8888);
             int counter = 0;

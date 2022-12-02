@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Set;
 
 public class VisitTableModel implements TableModel{
-    private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+    private final Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 
-    private List<Client> clients;
+    private final List<Client> clients;
 
-    private List<Visits> visits;
+    private final List<Visits> visits;
 
     public VisitTableModel(List<Visits> visits , List<Client> clients){
         this.visits = visits;
@@ -22,9 +22,9 @@ public class VisitTableModel implements TableModel{
     }
 
     public String getSurname(Visits visit){
-        for (int i = 0; i < clients.size(); i++) {
-            if (visit.getClient_id() == clients.get(i).getId()) {
-                return clients.get(i).getName();
+        for (Client client : clients) {
+            if (visit.getClient_id() == client.getId()) {
+                return client.getName();
             }
         }
         return "";

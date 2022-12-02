@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 public class ClientTableModel implements TableModel{
-    private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+    private final Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 
-    private List<Client> clients;
+    private final List<Client> clients;
 
     public ClientTableModel(List<Client> clients){
         this.clients = clients;

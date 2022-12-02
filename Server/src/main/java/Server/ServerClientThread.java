@@ -31,102 +31,92 @@ class ServerClientThread extends Thread {
             String command = "";
             while(!command.equals("exit")){
                 command = (String) inStream.readObject();
-                switch (command){
-                    case "authorization":
+                switch (command) {
+                    case "authorization" -> {
                         User authorizationUser = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.authorization(authorizationUser));
-                        break;
-                    case "getAllAdmins":
-                        outStream.writeObject(dataBaseHandler.getAllAdmins());
-                        break;
-                    case "getAllUsers":
-                        outStream.writeObject(dataBaseHandler.getAllUsers());
-                        break;
-                    case "getAllDoctors":
-                        outStream.writeObject(dataBaseHandler.getAllDoctors());
-                        break;
-                    case "getAllClients":
-                        outStream.writeObject(dataBaseHandler.getAllClients());
-                        break;
-                    case "getRecordsSchedule":
+                    }
+                    case "getAllAdmins" -> outStream.writeObject(dataBaseHandler.getAllAdmins());
+                    case "getAllUsers" -> outStream.writeObject(dataBaseHandler.getAllUsers());
+                    case "getAllDoctors" -> outStream.writeObject(dataBaseHandler.getAllDoctors());
+                    case "getAllClients" -> outStream.writeObject(dataBaseHandler.getAllClients());
+                    case "getRecordsSchedule" -> {
                         Doctor doctor = (Doctor) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.getRecordsSchedule(doctor));
-                        break;
-                    case "getAllVisits":
-                        outStream.writeObject(dataBaseHandler.getAllVisits());
-                        break;
-                    case "getAllVisitsDoctor":
+                    }
+                    case "getAllVisits" -> outStream.writeObject(dataBaseHandler.getAllVisits());
+                    case "getAllVisitsDoctor" -> {
                         Doctor workdoctor = (Doctor) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.getAllVisitsDoctor(workdoctor));
-                        break;
-                    case "insertAdmin":
+                    }
+                    case "insertAdmin" -> {
                         Admin newAdmin = (Admin) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.addAdmin(newAdmin));
-                        break;
-                    case "insertUser":
+                    }
+                    case "insertUser" -> {
                         User newUser = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.addUser(newUser));
-                        break;
-                    case "insertDoctor":
+                    }
+                    case "insertDoctor" -> {
                         Doctor newDoctor = (Doctor) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.addDoctor(newDoctor));
-                        break;
-                    case "insertClient":
+                    }
+                    case "insertClient" -> {
                         Client newClient = (Client) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.addClient(newClient));
-                        break;
-                    case "insertVisit":
+                    }
+                    case "insertVisit" -> {
                         Visits addVisit = (Visits) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.addVisit(addVisit));
-                        break;
-                    case "updateMyUserData":
+                    }
+                    case "updateMyUserData" -> {
                         User updateMyUserData = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.updateMyUserData(updateMyUserData));
-                        break;
-                    case "updatePassword":
+                    }
+                    case "updatePassword" -> {
                         User updatePassword = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.updatePassword(updatePassword));
-                        break;
-                    case "updatePerson":
+                    }
+                    case "updatePerson" -> {
                         User updatePerson = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.updatePerson(updatePerson));
-                        break;
-                    case "updateAdmin":
+                    }
+                    case "updateAdmin" -> {
                         Admin updateAdmin = (Admin) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.updateAdmin(updateAdmin));
-                        break;
-                    case "updateUser":
+                    }
+                    case "updateUser" -> {
                         User updateUser = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.updateUser(updateUser));
-                        break;
-                    case "updateDoctor":
+                    }
+                    case "updateDoctor" -> {
                         Doctor updateDoctor = (Doctor) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.updateDoctor(updateDoctor));
-                        break;
-                    case "updateClient":
+                    }
+                    case "updateClient" -> {
                         Client updateClient = (Client) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.updateClient(updateClient));
-                        break;
-                    case "deleteAdmin":
+                    }
+                    case "deleteAdmin" -> {
                         Admin deleteAdmin = (Admin) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.deleteAdmin(deleteAdmin));
-                        break;
-                    case "deleteUser":
+                    }
+                    case "deleteUser" -> {
                         User deleteUser = (User) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.deleteUser(deleteUser));
-                        break;
-                    case "deleteClient":
+                    }
+                    case "deleteClient" -> {
                         Client deleteClient = (Client) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.deleteClient(deleteClient));
-                        break;
-                    case "deleteDoctor":
+                    }
+                    case "deleteDoctor" -> {
                         Doctor deleteDoctor = (Doctor) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.deleteDoctor(deleteDoctor));
-                        break;
-                    case "getCheck":
+                    }
+                    case "getCheck" -> {
                         Visits currentVisit = (Visits) inStream.readObject();
                         outStream.writeObject(dataBaseHandler.getCheck(currentVisit));
-                        break;
+                    }
                 }
             }
         } catch (Exception ex) {

@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Set;
 
 public class DoctorTableModel implements TableModel{
-    private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+    private final Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 
-    private List<Doctor> doctors;
+    private final List<Doctor> doctors;
 
     public DoctorTableModel(List<Doctor> doctors){
         this.doctors = doctors;

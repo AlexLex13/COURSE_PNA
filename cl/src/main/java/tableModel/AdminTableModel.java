@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class AdminTableModel implements TableModel {
 
-    private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+    private final Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 
-    private List<Admin> admins;
+    private final List<Admin> admins;
 
     public AdminTableModel(List<Admin> admins){
         this.admins = admins;

@@ -10,8 +10,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -38,7 +36,6 @@ public class MainFrame extends JFrame{
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Главное меню");
@@ -68,69 +65,59 @@ public class MainFrame extends JFrame{
 
     public MainFrame() {
         initComponents();
-        entranceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                    ObjectOutputStream output = MainFrame.output;
-                    ObjectInputStream input = MainFrame.input;
-                    User user = new User();
-                    user.setLogin(loginField.getText());
-                    user.setPassword(passwordField.getText());
-                    if(user.getLogin().equals("")){
-                        JOptionPane.showMessageDialog(null, "Вы не ввели логин!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if (user.getLogin().length() <= 4 || user.getLogin().length() >= 15){
-                        JOptionPane.showMessageDialog(null, "Логин должен быть больше 4 и меньше 15 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(user.getPassword().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Вы не ввели пароль!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(user.getPassword().length() <= 4 || user.getPassword().length() >= 15) {
-                        JOptionPane.showMessageDialog(null, "Пароль должен быть больше 4 и меньше 15 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else{
-                        output.writeObject("authorization");
-                        output.writeObject(user);
-                        user = (User) input.readObject();
-                        switch (user.getRole()) {
-                            case "wrong" -> JOptionPane.showMessageDialog(null, "Пользователя с такими данными не существует!", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                            case "admin" -> {
-                                new AdminFrame(user.getId()).setVisible(true);
-                                dispose();
-                            }
-                            case "user" -> {
-                                new UserFrame(user.getId()).setVisible(true);
-                                dispose();
-                            }
-                            case "doctor" -> {
-                                new DoctorFrame(user.getId()).setVisible(true);
-                                dispose();
-                            }
+        entranceButton.addActionListener(e -> {
+            try{
+                ObjectOutputStream output = MainFrame.output;
+                ObjectInputStream input = MainFrame.input;
+                User user = new User();
+                user.setLogin(loginField.getText());
+                user.setPassword(passwordField.getText());
+                if(user.getLogin().equals("")){
+                    JOptionPane.showMessageDialog(null, "Вы не ввели логин!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (user.getLogin().length() <= 4 || user.getLogin().length() >= 15){
+                    JOptionPane.showMessageDialog(null, "Логин должен быть больше 4 и меньше 15 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(user.getPassword().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Вы не ввели пароль!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(user.getPassword().length() <= 4 || user.getPassword().length() >= 15) {
+                    JOptionPane.showMessageDialog(null, "Пароль должен быть больше 4 и меньше 15 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    output.writeObject("authorization");
+                    output.writeObject(user);
+                    user = (User) input.readObject();
+                    switch (user.getRole()) {
+                        case "wrong" -> JOptionPane.showMessageDialog(null, "Пользователя с такими данными не существует!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                        case "admin" -> {
+                            new AdminFrame(user.getId()).setVisible(true);
+                            dispose();
+                        }
+                        case "user" -> {
+                            new UserFrame(user.getId()).setVisible(true);
+                            dispose();
+                        }
+                        case "doctor" -> {
+                            new DoctorFrame(user.getId()).setVisible(true);
+                            dispose();
                         }
                     }
                 }
-                catch (Exception ex){
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
-                }
+            }
+            catch (Exception ex){
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginField.setText("");
-                passwordField.setText("");
-            }
+        clearButton.addActionListener(e -> {
+            loginField.setText("");
+            passwordField.setText("");
         });
     }
 
     public static void main(String[] args) {
         MainFrame.connect();
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainFrame().setVisible(true);
-            }
-        });
+        EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
     }
 }

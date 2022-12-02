@@ -1,9 +1,11 @@
 package DataBase;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class DataBaseConnector {
@@ -29,8 +31,6 @@ public class DataBaseConnector {
         var properties = new Properties();
         String propFileName = "Server/src/main/resources/config.properties";
         var inputStream = new FileInputStream(propFileName);
-        if (inputStream == null)
-            throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
         properties.load(inputStream);
         return properties;
     }

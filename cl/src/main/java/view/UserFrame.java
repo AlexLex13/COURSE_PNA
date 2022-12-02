@@ -40,15 +40,10 @@ public class UserFrame  extends JFrame{
     private JButton editClientButton;
     private JCheckBox deleteClientCheckBox;
     private JButton deleteClientButton;
-    private JTextField editClientPassportField;
-    private JTextField editClientDistrictField;
-    private JTextField editClientNameField;
-    private JTextField editClientBirthDateField;
-    private JTextField editClientAddressField;
+    private JTextField editClientPassportField, editClientDistrictField, editClientNameField, editClientBirthDateField, editClientAddressField;
     private JButton printCheckButton;
     private JButton statsButton;
-    private JTabbedPane tabbedPane1;
-    private JTabbedPane tabbedPane2;
+    private JTabbedPane tabbedPane1, tabbedPane2;
     private JScrollPane workClientsTab;
     private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
@@ -125,20 +120,16 @@ public class UserFrame  extends JFrame{
     }
 
 
-    //-------------------------------ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ-------------------------------
-
-
     public void readData(){
         try{
             output.writeObject("getAllUsers");
             this.users = (ArrayList<User>) input.readObject();
-            for(int i = 0; i < users.size(); i++){
-                if(USER_ID == users.get(i).getId()){
-                    User user = users.get(i);
-                    myNameField.setText(user.getName());
-                    myLoginField.setText(user.getLogin());
-                    myPasswordField1.setText(user.getPassword());
-                    myPasswordField2.setText(user.getPassword());
+            for (User value : users) {
+                if (USER_ID == value.getId()) {
+                    myNameField.setText(value.getName());
+                    myLoginField.setText(value.getLogin());
+                    myPasswordField1.setText(value.getPassword());
+                    myPasswordField2.setText(value.getPassword());
                 }
             }
             output.writeObject("getAllClients");

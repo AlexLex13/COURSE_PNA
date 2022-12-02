@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class UserTableModel implements TableModel{
 
-    private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+    private final Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 
-    private List<User> users;
+    private final List<User> users;
 
     public UserTableModel(List<User> users){
         this.users = users;
