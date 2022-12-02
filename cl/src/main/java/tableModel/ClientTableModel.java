@@ -33,9 +33,9 @@ public class ClientTableModel implements TableModel{
         return switch (columnIndex) {
             case 0 -> "Номер паспорта";
             case 1 -> "Имя";
-            case 5 -> "Участок";
-            case 6 -> "Дата рождения";
-            case 7 -> "Адрес";
+            case 2 -> "Участок";
+            case 3 -> "Дата рождения";
+            case 4 -> "Адрес";
             default -> "";
         };
     }
@@ -43,7 +43,7 @@ public class ClientTableModel implements TableModel{
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 1, 2, 3, 4, 5, 6, 7 -> String.class;
+            case 0, 1, 2, 3, 4 -> String.class;
             default -> Object.class;
         };
     }
@@ -58,10 +58,10 @@ public class ClientTableModel implements TableModel{
         Client client = clients.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> client.getPassportNumber();
-            case 2 -> client.getName();
-            case 5 -> client.getDistrict();
-            case 6 -> client.getDateOfBirth();
-            case 7 -> client.getAddress();
+            case 1 -> client.getName();
+            case 2 -> client.getDistrict();
+            case 3 -> client.getDateOfBirth();
+            case 4 -> client.getAddress();
             default -> null;
         };
     }

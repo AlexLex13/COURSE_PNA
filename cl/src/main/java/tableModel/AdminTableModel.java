@@ -34,9 +34,9 @@ public class AdminTableModel implements TableModel {
         return switch (columnIndex) {
             case 0 -> "ID";
             case 1 -> "Имя";
-            case 4 -> "Логин";
-            case 7 -> "Права доступа";
-            case 8 -> "Блокировка";
+            case 2 -> "Логин";
+            case 3 -> "Права доступа";
+            case 4 -> "Блокировка";
             default -> "";
         };
     }
@@ -45,7 +45,7 @@ public class AdminTableModel implements TableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0 -> Integer.class;
-            case 1, 2, 3, 4, 5, 6, 7, 8 -> String.class;
+            case 1, 2, 3, 4 -> String.class;
             default -> Object.class;
         };
     }
@@ -60,10 +60,10 @@ public class AdminTableModel implements TableModel {
         Admin admin = admins.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> admin.getUserId();
-            case 2 -> admin.getName();
-            case 4 -> admin.getLogin();
-            case 7 -> admin.getRights();
-            case 8 -> admin.getBlock();
+            case 1 -> admin.getName();
+            case 2 -> admin.getLogin();
+            case 3 -> admin.getRights();
+            case 4 -> admin.getBlock();
             default -> null;
         };
     }

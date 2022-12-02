@@ -34,10 +34,10 @@ public class DoctorTableModel implements TableModel{
         return switch (columnIndex) {
             case 0 -> "ID";
             case 1 -> "Имя";
-            case 3 -> "Логин";
-            case 7 -> "Должность";
-            case 8 -> "Кабинет";
-            case 9 -> "Участок";
+            case 2 -> "Логин";
+            case 3 -> "Должность";
+            case 4 -> "Кабинет";
+            case 5 -> "Участок";
             default -> "";
         };
     }
@@ -46,7 +46,7 @@ public class DoctorTableModel implements TableModel{
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0 -> Integer.class;
-            case 1, 2, 3, 4, 5, 6, 7, 8, 9 -> String.class;
+            case 1, 2, 3, 4, 5 -> String.class;
             default -> Object.class;
         };
     }
@@ -61,11 +61,11 @@ public class DoctorTableModel implements TableModel{
         Doctor doctor = doctors.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> doctor.getUserId();
-            case 2 -> doctor.getName();
-            case 4 -> doctor.getLogin();
-            case 7 -> doctor.getPost();
-            case 8 -> doctor.getRoom();
-            case 9 -> doctor.getDistrict();
+            case 1 -> doctor.getName();
+            case 2 -> doctor.getLogin();
+            case 3 -> doctor.getPost();
+            case 4 -> doctor.getRoom();
+            case 5 -> doctor.getDistrict();
             default -> null;
         };
     }

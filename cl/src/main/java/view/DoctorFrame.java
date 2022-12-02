@@ -13,12 +13,8 @@ import java.util.ArrayList;
 public class DoctorFrame extends JFrame{
     private JPanel mainPanel;
     private JButton closeFrameButton;
-    private JTextField mySurnameField;
     private JTextField myNameField;
-    private JTextField myLastnameField;
-    private JTextField myPhoneField;
     private JButton editMyPersonalDataButton;
-    private JTextField myWorkPhoneField;
     private JTextField myLoginField;
     private JPasswordField myPasswordField1;
     private JPasswordField myPasswordField2;
@@ -46,16 +42,15 @@ public class DoctorFrame extends JFrame{
     private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Doctor> doctors = new ArrayList<>();
-    private ObjectOutputStream output = MainFrame.output;
-    private ObjectInputStream input = MainFrame.input;
+    private final ObjectOutputStream output = MainFrame.output;
+    private final ObjectInputStream input = MainFrame.input;
     private ArrayList<Visits> visits = new ArrayList<>();
     private ArrayList<Client> clients = new ArrayList<>();
-    private int USER_ID;
+    private final int USER_ID;
 
     //-------------------------------ИНИЦИАЛИЗАЦИЯ ФРЕЙМА-------------------------------
 
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Врач");
@@ -69,9 +64,6 @@ public class DoctorFrame extends JFrame{
     }
 
 
-    //-------------------------------КОНСТРУКТОР ФРЕЙМА-------------------------------
-
-
     public DoctorFrame(int user_id) {
         this.USER_ID = user_id;
         initComponents();
@@ -81,37 +73,34 @@ public class DoctorFrame extends JFrame{
         statsButton.addActionListener(e -> statsButtonActionPerformed());
     }
 
-    //-------------------------------ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ-------------------------------
-
-
     public void readData(){
         try{
             output.writeObject("getAllDoctors");
+
             this.doctors = (ArrayList<Doctor>) input.readObject();
-            for(int i = 0; i < doctors.size(); i++){
-                if(USER_ID == doctors.get(i).getUserId()){
-                    Doctor doctor = doctors.get(i);
-                    myNameField.setText(doctor.getName());
-                    myLoginField.setText(doctor.getLogin());
-                    myPasswordField1.setText(doctor.getPassword());
-                    myPasswordField2.setText(doctor.getPassword());
-                    myPostField.setText(doctor.getPost());
-                    myRoomField.setText(doctor.getRoom());
-                    myDistrictField.setText(doctor.getDistrict());
-                    moIn.setText(doctor.getSchedule()[0]);
-                    moOut.setText(doctor.getSchedule()[1]);
-                    tuIn.setText(doctor.getSchedule()[2]);
-                    tuOut.setText(doctor.getSchedule()[3]);
-                    weIn.setText(doctor.getSchedule()[4]);
-                    weOut.setText(doctor.getSchedule()[5]);
-                    thIn.setText(doctor.getSchedule()[6]);
-                    thOut.setText(doctor.getSchedule()[7]);
-                    frIn.setText(doctor.getSchedule()[8]);
-                    frOut.setText(doctor.getSchedule()[9]);
-                    saIn.setText(doctor.getSchedule()[10]);
-                    saOut.setText(doctor.getSchedule()[11]);
-                    suIn.setText(doctor.getSchedule()[12]);
-                    suOut.setText(doctor.getSchedule()[13]);
+            for (Doctor value : doctors) {
+                if (USER_ID == value.getUserId()) {
+                    myNameField.setText(value.getName());
+                    myLoginField.setText(value.getLogin());
+                    myPasswordField1.setText(value.getPassword());
+                    myPasswordField2.setText(value.getPassword());
+                    myPostField.setText(value.getPost());
+                    myRoomField.setText(value.getRoom());
+                    myDistrictField.setText(value.getDistrict());
+                    moIn.setText(value.getSchedule()[0]);
+                    moOut.setText(value.getSchedule()[1]);
+                    tuIn.setText(value.getSchedule()[2]);
+                    tuOut.setText(value.getSchedule()[3]);
+                    weIn.setText(value.getSchedule()[4]);
+                    weOut.setText(value.getSchedule()[5]);
+                    thIn.setText(value.getSchedule()[6]);
+                    thOut.setText(value.getSchedule()[7]);
+                    frIn.setText(value.getSchedule()[8]);
+                    frOut.setText(value.getSchedule()[9]);
+                    saIn.setText(value.getSchedule()[10]);
+                    saOut.setText(value.getSchedule()[11]);
+                    suIn.setText(value.getSchedule()[12]);
+                    suOut.setText(value.getSchedule()[13]);
                 }
             }
             output.writeObject("getAllUsers");
@@ -129,9 +118,6 @@ public class DoctorFrame extends JFrame{
     }
 
 
-    //-------------------------------ФУНКЦИИ-СЛУШАТЕЛИ-------------------------------
-
-
     private Boolean checkLogin(String login) {
         if (login.equals("")) {
             JOptionPane.showMessageDialog(null, "Вы не ввели логин!", "Ошибка", JOptionPane.ERROR_MESSAGE);
@@ -140,20 +126,20 @@ public class DoctorFrame extends JFrame{
             JOptionPane.showMessageDialog(null, "Логин должен быть больше 4 и меньше 15 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
-            for (int i = 0; i < admins.size(); i++) {
-                if (login.equals(admins.get(i).getLogin())) {
+            for (Admin admin : admins) {
+                if (login.equals(admin.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
-            for (int i = 0; i < users.size(); i++) {
-                if (login.equals(users.get(i).getLogin())) {
+            for (User user : users) {
+                if (login.equals(user.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
-            for (int i = 0; i < doctors.size(); i++) {
-                if (login.equals(doctors.get(i).getLogin())) {
+            for (Doctor doctor : doctors) {
+                if (login.equals(doctor.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
@@ -179,7 +165,7 @@ public class DoctorFrame extends JFrame{
     }
 
     private void editMyPersonalDataActionPerformed(){
-        if(mySurnameField.isEditable()) {
+        if(myNameField.isEditable()) {
             try {
                 User user = new User();
                 user.setId(USER_ID);
@@ -200,17 +186,11 @@ public class DoctorFrame extends JFrame{
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
-            mySurnameField.setEditable(false);
             myNameField.setEditable(false);
-            myLastnameField.setEditable(false);
-            myPhoneField.setEditable(false);
             editMyPersonalDataButton.setText("Редактировать личные данные");
         }
         else{
-            mySurnameField.setEditable(true);
             myNameField.setEditable(true);
-            myLastnameField.setEditable(true);
-            myPhoneField.setEditable(true);
             editMyPersonalDataButton.setText("Сохранить");
         }
     }
@@ -220,7 +200,6 @@ public class DoctorFrame extends JFrame{
         users.clear();
         doctors.clear();
         readData();
-        //заблица
     }
 
     private void editMyAuthorizationDataActionPerformed(){
@@ -254,14 +233,12 @@ public class DoctorFrame extends JFrame{
             myLoginField.setEditable(false);
             myPasswordField1.setEditable(false);
             myPasswordField2.setEditable(false);
-            myWorkPhoneField.setEditable(false);
             editMyAuthorizationDataButton.setText("Редактировать данные авторизации");
         }
         else{
             myLoginField.setEditable(true);
             myPasswordField1.setEditable(true);
             myPasswordField2.setEditable(true);
-            myWorkPhoneField.setEditable(true);
             editMyAuthorizationDataButton.setText("Сохранить");
         }
     }

@@ -53,7 +53,7 @@ public class UserFrame  extends JFrame{
     private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Doctor> doctors = new ArrayList<>();
-    private ArrayList<Doctor> currentDoctors = new ArrayList<>();
+    private final ArrayList<Doctor> currentDoctors = new ArrayList<>();
     private ArrayList<Visits> visits = new ArrayList<>();
     private ArrayList<Schedule> currentSchedule = new ArrayList<>();
     private ArrayList<Client> clients = new ArrayList<>();
@@ -65,7 +65,6 @@ public class UserFrame  extends JFrame{
     //-------------------------------ИНИЦИАЛИЗАЦИЯ ФРЕЙМА-------------------------------
 
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Регистратор");
@@ -184,20 +183,20 @@ public class UserFrame  extends JFrame{
             JOptionPane.showMessageDialog(null, "Логин должен быть больше 4 и меньше 15 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
-            for (int i = 0; i < admins.size(); i++) {
-                if (login.equals(admins.get(i).getLogin())) {
+            for (Admin admin : admins) {
+                if (login.equals(admin.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
-            for (int i = 0; i < users.size(); i++) {
-                if (login.equals(users.get(i).getLogin())) {
+            for (User user : users) {
+                if (login.equals(user.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
-            for (int i = 0; i < doctors.size(); i++) {
-                if (login.equals(doctors.get(i).getLogin())) {
+            for (Doctor doctor : doctors) {
+                if (login.equals(doctor.getLogin())) {
                     JOptionPane.showMessageDialog(null, "Данный логин уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
@@ -235,8 +234,8 @@ public class UserFrame  extends JFrame{
     }
 
     private Boolean checkPassport(String passportNumber){
-        for (int i = 0; i < clients.size(); i++) {
-            if (passportNumber.equals(clients.get(i).getPassportNumber())) {
+        for (Client client : clients) {
+            if (passportNumber.equals(client.getPassportNumber())) {
                 JOptionPane.showMessageDialog(null, "Данный номер паспорта уже есть в системе!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -402,9 +401,9 @@ public class UserFrame  extends JFrame{
     private void recordClientsTableActionPerformed(){
         Client client = clients.get(recordClientsTable.getSelectedRow());
         currentDoctors.clear();
-        for(int i = 0; i < doctors.size(); i++){
-            if(client.getDistrict().equals(doctors.get(i).getDistrict())){
-                currentDoctors.add(doctors.get(i));
+        for (Doctor doctor : doctors) {
+            if (client.getDistrict().equals(doctor.getDistrict())) {
+                currentDoctors.add(doctor);
             }
         }
         TableModel doctorsModel = new DoctorTableModel(currentDoctors);

@@ -33,7 +33,7 @@ public class UserTableModel implements TableModel{
         return switch (columnIndex) {
             case 0 -> "ID";
             case 1 -> "Имя";
-            case 3 -> "Логин";
+            case 2 -> "Логин";
             default -> "";
         };
     }
@@ -42,7 +42,7 @@ public class UserTableModel implements TableModel{
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0 -> Integer.class;
-            case 1, 2, 3, 4, 5, 6 -> String.class;
+            case 1, 2-> String.class;
             default -> Object.class;
         };
     }
@@ -57,8 +57,8 @@ public class UserTableModel implements TableModel{
         User user = users.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> user.getId();
-            case 2 -> user.getName();
-            case 4 -> user.getLogin();
+            case 1 -> user.getName();
+            case 2 -> user.getLogin();
             default -> null;
         };
     }

@@ -514,7 +514,9 @@
                 <children>
                   <component id="38529" class="javax.swing.JTable" binding="workClientsTable">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <showHorizontalLines value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
