@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class addRecordTableModel implements TableModel{
 
-    private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+    private final Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 
-    private List<Schedule> schedule;
+    private final List<Schedule> schedule;
 
     public addRecordTableModel(List<Schedule> schedule){
         this.schedule = schedule;
@@ -30,31 +30,22 @@ public class addRecordTableModel implements TableModel{
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "Дата";
-            case 1:
-                return "Время";
-            case 2:
-                return "Дата регистрации записи";
-            case 3:
-                return "Номер паспорта клиента";
-            case 4:
-                return "Комментарий";
-        }
-        return "";
+        return switch (columnIndex) {
+            case 0 -> "Дата";
+            case 1 -> "Время";
+            case 2 -> "Дата регистрации записи";
+            case 3 -> "Номер паспорта клиента";
+            case 4 -> "Комментарий";
+            default -> "";
+        };
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0: return String.class;
-            case 1: return String.class;
-            case 2: return String.class;
-            case 3: return String.class;
-            case 4: return String.class;
-            default: return Object.class;
-        }
+        return switch (columnIndex) {
+            case 0, 1, 2, 3, 4 -> String.class;
+            default -> Object.class;
+        };
     }
 
     @Override
@@ -65,19 +56,14 @@ public class addRecordTableModel implements TableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Schedule sch = schedule.get(rowIndex);
-        switch (columnIndex){
-            case 0:
-                return sch.getDate();
-            case 1:
-                return sch.getTime();
-            case 2:
-                return sch.getRegistrationTime();
-            case 3:
-                return sch.getPassportNumber();
-            case 4:
-                return sch.getComment();
-        }
-        return null;
+        return switch (columnIndex) {
+            case 0 -> sch.getDate();
+            case 1 -> sch.getTime();
+            case 2 -> sch.getRegistrationTime();
+            case 3 -> sch.getPassportNumber();
+            case 4 -> sch.getComment();
+            default -> null;
+        };
     }
 
     @Override

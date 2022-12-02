@@ -17,7 +17,7 @@ public class DataBaseHandler extends DataBaseConnector {
             if(rs.next()){
                 if (user.getPassword().equals(rs.getString("password"))) {
                     user.setRole(rs.getString("role"));
-                    user.setId(Integer.parseInt(rs.getString("id")));
+                    user.setId(Integer.parseInt(rs.getString("user_id")));
                 }
                 else{
                     user.setRole("wrong");
@@ -38,11 +38,12 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public ArrayList<Admin> getAllAdmins() throws SQLException{
         try {
-            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" WHERE role='admin';");
+            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" AS U INNER JOIN \"Person\" AS P on U.person_id=P.person_id\n" +
+                    "INNER JOIN \"Admin\" AS A on U.user_id=A.user_id WHERE U.role='admin';");
             ArrayList<Admin> adminList = new ArrayList<>();
             while(rs.next()){
                 Admin admin = new Admin(
-                        Integer.parseInt(rs.getString("id")),
+                        Integer.parseInt(rs.getString("user_id")),
                         rs.getString("login"),
                         rs.getString("password"),
                         rs.getString("role"),
@@ -64,7 +65,7 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public ArrayList<User> getAllUsers() throws SQLException{
         try {
-            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" WHERE user.role='user';");
+            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" AS U INNER JOIN \"Person\" AS P ON U.person_id=P.person_id WHERE U.role='user';");
             ArrayList<User> userList = new ArrayList<>();
             while(rs.next()){
                 User user = new User(
@@ -87,7 +88,8 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public ArrayList<Doctor> getAllDoctors() throws SQLException{
         try {
-            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"Doctor\"");
+            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" AS U INNER JOIN \"Person\" AS P on U.person_id=P.person_id\n" +
+                    "INNER JOIN \"Doctor\" AS D on U.user_id=D.user_id WHERE U.role='doctor';");
             ArrayList<Doctor> doctorList = new ArrayList<>();
             while(rs.next()){
                 String schedule[];

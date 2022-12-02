@@ -26,7 +26,6 @@ public class MainFrame extends JFrame{
     public static Socket clientSocket;
     public static ObjectOutputStream output;
     public static ObjectInputStream input;
-    public static int user_id;
 
     public static void connect(){
         try{
