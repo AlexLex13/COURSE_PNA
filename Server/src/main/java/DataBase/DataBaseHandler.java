@@ -37,8 +37,8 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public ArrayList<Admin> getAllAdmins() {
         try {
-            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" U INNER JOIN \"Person\" P on U.person_id=P.person_id\n" +
-                    "INNER JOIN \"Admin\" AS A on U.user_id=A.user_id WHERE U.role='admin';");
+            ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" U INNER JOIN \"Person\" P ON U.person_id=P.person_id\n" +
+                    "INNER JOIN \"Admin\" A ON U.user_id=A.user_id WHERE U.role='admin';");
             ArrayList<Admin> adminList = new ArrayList<>();
             while(rs.next()){
                 Admin admin = new Admin(
@@ -88,7 +88,7 @@ public class DataBaseHandler extends DataBaseConnector {
     public ArrayList<Doctor> getAllDoctors() {
         try {
             ResultSet rs = super.getStatement().executeQuery("SELECT * FROM \"User\" U INNER JOIN \"Person\" P on U.person_id=P.person_id\n" +
-                    "INNER JOIN \"Doctor\" D on U.user_id=D.user_id WHERE U.role='doctor';");
+                    "INNER JOIN \"Doctor\" D ON U.user_id=D.user_id WHERE U.role='doctor';");
             ArrayList<Doctor> doctorList = new ArrayList<>();
             while(rs.next()){
                 String[] schedule;
@@ -146,14 +146,14 @@ public class DataBaseHandler extends DataBaseConnector {
     public ArrayList<Schedule> getRecordsSchedule(Doctor doctor){
         try{
             ArrayList<Schedule> scheduleList = new ArrayList<>();
-            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT schedule, EXTRACT(NOW()) as daynum FROM \"Doctor\" where doctor_id='%d';", doctor.getId()));
+            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT schedule, EXTRACT(ISODOW FROM NOW()) AS daynum FROM \"Doctor\" where doctor_id='%d';", doctor.getId()));
             if(rs.next()){
                 String[] doctorSchedule = rs.getString("schedule").split("-", 14);
                 int curdamynum = Integer.parseInt(rs.getString("daynum"));
                 int day = curdamynum;
                 int interval = 0;
                 while(day < 7){
-                        ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT DATEADD(NOW(), interval '%d' day) AS date;", interval));
+                        ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT EXTRACT(DAY FROM NOW()) + '%d' AS date;", interval));
                     if(rsDateFirst.next()){
                         String currentTime = doctorSchedule[day*2];
                         if(currentTime != null){
@@ -161,9 +161,9 @@ public class DataBaseHandler extends DataBaseConnector {
                                 Schedule schedule = new Schedule();
                                 Statement statement = super.getConnection().createStatement();
                                 ResultSet rsOldRecord = statement.executeQuery(String.format("""
-                                        SELECT * FROM "Visit" V AS P\s
-                                        INNER JOIN "Client" C on V.client_id=C.client_id\s
-                                        INNER JOIN "Doctor" D on V.doctor_id=D.doctor_id
+                                        SELECT * FROM "Visit" V AS P
+                                        INNER JOIN "Client" C ON V.client_id=C.client_id
+                                        INNER JOIN "Doctor" D ON V.doctor_id=D.doctor_id
                                         WHERE D.doctor_id='%d' AND time='%s' AND date='%s';""", doctor.getId(), currentTime, rsDateFirst.getString("date")));
                                 if(rsOldRecord.next()){
                                     schedule.setRegistrationTime(rsOldRecord.getString("registration_date"));
@@ -186,7 +186,7 @@ public class DataBaseHandler extends DataBaseConnector {
                 }
                 day = 0;
                 while(day < curdamynum){
-                    ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT DATEADD(NOW(), interval '%d' day) AS date;", interval));
+                    ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT EXTRACT(DAY FROM NOW()) + '%d' AS date;", interval));
                     if(rsDateFirst.next()){
                         String currentTime = doctorSchedule[day*2];
                         if(currentTime != null){
@@ -194,8 +194,8 @@ public class DataBaseHandler extends DataBaseConnector {
                                 Schedule schedule = new Schedule();
                                 Statement statement = super.getConnection().createStatement();
                                 ResultSet rsOldRecord1 = statement.executeQuery(String.format("""
-                                        SELECT * FROM "Visit" V\s
-                                        INNER JOIN "Client" C on V.client_id=C.client_id\s
+                                        SELECT * FROM "Visit" V
+                                        INNER JOIN "Client" C on V.client_id=C.client_id
                                         INNER JOIN "Doctor" D on V.doctor_id=D.doctor_id
                                         WHERE D.doctor_id='%d' AND time='%s' AND date='%s';""", doctor.getId(), currentTime, rsDateFirst.getString("date")));
                                 if(rsOldRecord1.next()){
@@ -277,7 +277,7 @@ public class DataBaseHandler extends DataBaseConnector {
     public String getCheck(Visits visit) {
         try{
             ResultSet rs = super.getStatement().executeQuery(String.format("""
-                    select * from "Visit" V\s
+                    select * from "Visit" V
                     inner join "Client" C on V.client_id=C.client_id
                     inner join "Doctor" D on V.doctor_id=D.doctor_id
                     inner join "User" U on D.user_id=U.user_id
@@ -300,14 +300,11 @@ public class DataBaseHandler extends DataBaseConnector {
     }
 
 
-    //-------------------------ДОБАВЛЕНИЕ ДАННЫХ-------------------------------------
-
-
     public String addAdmin(Admin newAdmin){
         String[] addData = {
                 String.format("INSERT INTO \"Person\" (name) VALUES('%s');", newAdmin.getName()),
-                String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', last_insert_id());", newAdmin.getLogin(), newAdmin.getPassword(), newAdmin.getRole()),
-                String.format("INSERT INTO \"Admin\" (rights, block, user_id) VALUES('%s', '%s', last_insert_id());", newAdmin.getRights(), newAdmin.getBlock())
+                String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", newAdmin.getLogin(), newAdmin.getPassword(), newAdmin.getRole()),
+                String.format("INSERT INTO \"Admin\" (rights, block, user_id) VALUES('%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", newAdmin.getRights(), newAdmin.getBlock())
         };
         return addData(addData);
     }
@@ -315,7 +312,7 @@ public class DataBaseHandler extends DataBaseConnector {
     public String addUser(User user){
         String[] addData = {
                 String.format("INSERT INTO \"Person\" (name) VALUES('%s');", user.getName()),
-                String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', last_insert_id());", user.getLogin(), user.getPassword(), user.getRole())
+                String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", user.getLogin(), user.getPassword(), user.getRole())
         };
         return addData(addData);
     }
@@ -323,8 +320,8 @@ public class DataBaseHandler extends DataBaseConnector {
     public String addDoctor(Doctor doctor){
         String[] addData = {
                 String.format("INSERT INTO \"Person\" (name) VALUES('%s');", doctor.getName()),
-                String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', last_insert_id());", doctor.getLogin(), doctor.getPassword(), doctor.getRole()),
-                String.format("INSERT INTO \"Doctor\" (post, room, district, schedule, user_id) VALUES('%s', '%s', '%s', '%s', last_insert_id());", doctor.getPost(), doctor.getRoom(), doctor.getDistrict(), "-------------")
+                String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", doctor.getLogin(), doctor.getPassword(), doctor.getRole()),
+                String.format("INSERT INTO \"Doctor\" (post, room, district, schedule, user_id) VALUES('%s', '%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", doctor.getPost(), doctor.getRoom(), doctor.getDistrict(), "-------------")
         };
         return addData(addData);
     }
@@ -332,7 +329,7 @@ public class DataBaseHandler extends DataBaseConnector {
     public String addClient(Client client){
         String[] addData = {
                 String.format("INSERT INTO \"Person\" (name) VALUES('%s');", client.getName()),
-                String.format("INSERT INTO \"Client\" (district, birth_date, address, passport_id, person_id) VALUES('%s', '%s', '%s', '%s', last_insert_id());", client.getDistrict(), client.getDateOfBirth(), client.getAddress(), client.getPassportNumber())
+                String.format("INSERT INTO \"Client\" (district, birth_date, address, passport_id, person_id) VALUES('%s', '%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", client.getDistrict(), client.getDateOfBirth(), client.getAddress(), client.getPassportNumber())
         };
         return addData(addData);
     }
@@ -359,7 +356,7 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public String updateAdmin(Admin admin) {
         String statement = String.format("""
-                        UPDATE "User" U INNER JOIN "Person" P ON P.person_id=U.person_id\s
+                        UPDATE "User" U INNER JOIN "Person" P ON P.person_id=U.person_id
                         INNER JOIN "Admin" A ON A.user_id=U.user_id
                         SET name='%s',login='%s',rights='%s',block='%s'
                         WHERE U.user_id='%d';""", admin.getName(),
@@ -376,9 +373,13 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public String updateUser(User user) {
         String statement = String.format("""
-                        UPDATE "User" U INNER JOIN "Person" P ON P.person_id=U.person_id\s
-                        SET name='%s',login='%s'
-                         WHERE U.user_id='%d';""", user.getName(),
+                        UPDATE "Person"
+                        SET name='%s'
+                        WHERE person_id = (SELECT person_id FROM "User" WHERE user_id='%d');
+                                                
+                        UPDATE "User"
+                        SET login='%s'
+                        WHERE user_id='%d';""", user.getName(), user.getId(),
                 user.getLogin(), user.getId());
         return updateData(statement);
     }
@@ -391,11 +392,18 @@ public class DataBaseHandler extends DataBaseConnector {
             schedule.append("-");
         }
         String statement = String.format("""
-                        UPDATE "User" U INNER JOIN "Person" P ON P.person_id=U.person_id\s
-                        INNER JOIN "Doctor" D ON D.user_id=U.user_id
-                        SET name='%s',login='%s',post='%s',room='%s',district='%s',schedule='%s'
-                        WHERE U.user_id='%d';""", doctor.getName(),
-                doctor.getLogin(), doctor.getPost(), doctor.getRoom(), doctor.getDistrict(), schedule, doctor.getUserId());
+                        UPDATE "Person"
+                        SET name='%s'
+                        WHERE person_id = (SELECT person_id FROM "User" WHERE user_id='%d');
+                                                
+                        UPDATE "User"
+                        SET login='%s'
+                        WHERE user_id='%d';
+                        
+                        UPDATE "Doctor"
+                        SET post='%s',room='%s',district='%s',schedule='%s'
+                        WHERE user_id='%d';""", doctor.getName(), doctor.getUserId(),
+                doctor.getLogin(), doctor.getUserId(), doctor.getPost(), doctor.getRoom(), doctor.getDistrict(), schedule, doctor.getUserId());
         return updateData(statement);
     }
 
@@ -415,7 +423,10 @@ public class DataBaseHandler extends DataBaseConnector {
     }
 
     public String updatePerson(User user) {
-        String statement = String.format("UPDATE \"Person\" P INNER JOIN \"User\" U on P.person_id=U.user_id SET name='%s' where user_id='%d';", user.getName(),  user.getId());
+        String statement = String.format("""
+                UPDATE "Person"
+                SET name='%s'
+                WHERE person_id = (SELECT person_id FROM "User" WHERE user_id='%d');""", user.getName(),  user.getId());
         return updateData(statement);
     }
 
@@ -426,9 +437,13 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public String updateClient(Client client){
         String statement = String.format("""
-                UPDATE "Client" C INNER JOIN "Person" P ON P.person_id=C.person_id\s
-                SET name='%s', district='%s',birth_date='%s',address='%s',passport_id='%s'
-                 WHERE C.client_id='%d';""", client.getName(), client.getDistrict(), client.getDateOfBirth(), client.getAddress(), client.getPassportNumber(), client.getId());
+                UPDATE "Person"
+                SET name='%s'
+                WHERE person_id = (SELECT person_id FROM "Client" WHERE client_id='%d');
+                                                
+                UPDATE "Client"
+                SET district='%s',birth_date='%s',address='%s',passport_id='%s'
+                WHERE client_id='%d';""", client.getName(),  client.getId(), client.getDistrict(), client.getDateOfBirth(), client.getAddress(), client.getPassportNumber(), client.getId());
         return updateData(statement);
     }
 
@@ -442,8 +457,6 @@ public class DataBaseHandler extends DataBaseConnector {
         }
         return "Не удалось изменить данные";
     }
-
-    //------------------------------УДАЛЕНИЕ ДАННЫХ----------------------------------
 
 
     public String deleteAdmin(Admin deleteAdmin){
