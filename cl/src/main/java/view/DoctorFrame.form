@@ -19,7 +19,9 @@
             <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="Consolas" style="2"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="8dded" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -92,7 +94,9 @@
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <font name="Consolas" style="2"/>
+                </properties>
                 <border type="none" title="Ваши данные пользователя"/>
                 <children>
                   <hspacer id="31b5c">
@@ -262,12 +266,16 @@
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <font name="Consolas" style="2"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="83c7a" class="javax.swing.JTable" binding="visitsTable">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <font name="Consolas" style="2"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

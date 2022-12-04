@@ -25,7 +25,7 @@ public class ClientTableModel implements TableModel{
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 5;
     }
 
     @Override

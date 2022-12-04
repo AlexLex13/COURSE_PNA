@@ -26,7 +26,7 @@ public class AdminTableModel implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 9;
+        return 5;
     }
 
     @Override

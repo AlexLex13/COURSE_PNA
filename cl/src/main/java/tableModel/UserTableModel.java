@@ -25,7 +25,7 @@ public class UserTableModel implements TableModel{
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 3;
     }
 
     @Override

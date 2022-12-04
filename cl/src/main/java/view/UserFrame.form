@@ -19,7 +19,9 @@
             <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="Consolas" style="2"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="dbafe" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -184,7 +186,9 @@
                     <preferred-size width="200" height="200"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <font name="Consolas" style="2"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <grid id="53053" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -518,6 +522,7 @@
                   <component id="38529" class="javax.swing.JTable" binding="workClientsTable">
                     <constraints/>
                     <properties>
+                      <font name="Consolas" style="2"/>
                       <showHorizontalLines value="true"/>
                     </properties>
                   </component>

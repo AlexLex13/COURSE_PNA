@@ -26,7 +26,7 @@ public class DoctorTableModel implements TableModel{
 
     @Override
     public int getColumnCount() {
-        return 10;
+        return 6;
     }
 
     @Override
