@@ -56,13 +56,9 @@ public class UserFrame  extends JFrame{
     private final ObjectInputStream input = MainFrame.input;
     private final int USER_ID;
 
-
-    //-------------------------------ИНИЦИАЛИЗАЦИЯ ФРЕЙМА-------------------------------
-
-
     private void initComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Регистратор");
+        setTitle("Пользователь");
         setContentPane(mainPanel);
         setResizable(false);
         readData();
@@ -81,10 +77,6 @@ public class UserFrame  extends JFrame{
         pack();
         setLocationRelativeTo(null);
     }
-
-
-    //-------------------------------КОНСТРУКТОР ФРЕЙМА-------------------------------
-
 
     public UserFrame(int user_id){
         this.USER_ID = user_id;
@@ -241,9 +233,6 @@ public class UserFrame  extends JFrame{
         editClientBirthDateField.setText("");
         editClientAddressField.setText("");
     }
-
-    //-------------------------------ФУНКЦИИ-СЛУШАТЕЛИ-------------------------------
-
 
     private void closeFrameActionPerformed(){
         new MainFrame().setVisible(true);

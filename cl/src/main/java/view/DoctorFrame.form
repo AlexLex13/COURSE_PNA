@@ -6,6 +6,9 @@
       <xy x="20" y="20" width="687" height="726"/>
     </constraints>
     <properties>
+      <background color="-7012372"/>
+      <font name="Consolas" style="2"/>
+      <foreground color="-7012372"/>
       <preferredSize width="1000" height="700"/>
     </properties>
     <border type="none"/>

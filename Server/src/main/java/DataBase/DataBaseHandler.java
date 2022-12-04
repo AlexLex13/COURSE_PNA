@@ -153,7 +153,7 @@ public class DataBaseHandler extends DataBaseConnector {
                 int day = curdamynum;
                 int interval = 0;
                 while(day < 7){
-                        ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT EXTRACT(DAY FROM NOW()) + '%d' AS date;", interval));
+                        ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval ''%d' day' AS date;", interval));
                     if(rsDateFirst.next()){
                         String currentTime = doctorSchedule[day*2];
                         if(currentTime != null){
@@ -161,7 +161,7 @@ public class DataBaseHandler extends DataBaseConnector {
                                 Schedule schedule = new Schedule();
                                 Statement statement = super.getConnection().createStatement();
                                 ResultSet rsOldRecord = statement.executeQuery(String.format("""
-                                        SELECT * FROM "Visit" V AS P
+                                        SELECT * FROM "Visit" V
                                         INNER JOIN "Client" C ON V.client_id=C.client_id
                                         INNER JOIN "Doctor" D ON V.doctor_id=D.doctor_id
                                         WHERE D.doctor_id='%d' AND time='%s' AND date='%s';""", doctor.getId(), currentTime, rsDateFirst.getString("date")));
@@ -186,7 +186,7 @@ public class DataBaseHandler extends DataBaseConnector {
                 }
                 day = 0;
                 while(day < curdamynum){
-                    ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT EXTRACT(DAY FROM NOW()) + '%d' AS date;", interval));
+                    ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval ''%d' day' AS date;", interval));
                     if(rsDateFirst.next()){
                         String currentTime = doctorSchedule[day*2];
                         if(currentTime != null){

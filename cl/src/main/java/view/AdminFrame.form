@@ -6,6 +6,9 @@
       <xy x="20" y="20" width="873" height="731"/>
     </constraints>
     <properties>
+      <background color="-7012372"/>
+      <font name="Consolas" style="2"/>
+      <foreground color="-7012372"/>
       <preferredSize width="1000" height="700"/>
     </properties>
     <border type="none"/>
@@ -695,7 +698,7 @@
           <grid id="eb906" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Работа с регистраторами"/>
+              <tabbedpane title="Работа с пользователями"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -712,7 +715,7 @@
                   <grid id="450ee" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <tabbedpane title="Добавление регистратора"/>
+                      <tabbedpane title="Добавление пользователя"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
@@ -837,7 +840,7 @@
                   <grid id="1fce3" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <tabbedpane title="Редактировать данные регистратора"/>
+                      <tabbedpane title="Редактировать данные пользователя"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
@@ -922,7 +925,7 @@
                   <grid id="30907" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <tabbedpane title="Смена пароля регистратора"/>
+                      <tabbedpane title="Смена пароля пользователя"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
@@ -982,7 +985,7 @@
                   <grid id="30b7a" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <tabbedpane title="Удалить регистратора"/>
+                      <tabbedpane title="Удалить пользователя"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
