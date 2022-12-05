@@ -146,11 +146,11 @@ public class DataBaseHandler extends DataBaseConnector {
     public ArrayList<Schedule> getRecordsSchedule(Doctor doctor){
         try{
             ArrayList<Schedule> scheduleList = new ArrayList<>();
-            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT schedule, EXTRACT(ISODOW FROM NOW()) AS daynum FROM \"Doctor\" where doctor_id='%d';", doctor.getId()));
+            ResultSet rs = super.getStatement().executeQuery(String.format("SELECT schedule, EXTRACT(ISODOW FROM NOW()) AS weekday FROM \"Doctor\" where doctor_id='%d';", doctor.getId()));
             if(rs.next()){
                 String[] doctorSchedule = rs.getString("schedule").split("-", 14);
-                int curdamynum = Integer.parseInt(rs.getString("daynum"));
-                int day = curdamynum;
+                int weekday = Integer.parseInt(rs.getString("weekday"));
+                int day = weekday;
                 int interval = 0;
                 while(day < 7){
                         ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval '%d day' AS date;", interval));
@@ -185,7 +185,7 @@ public class DataBaseHandler extends DataBaseConnector {
                     day++;
                 }
                 day = 0;
-                while(day < curdamynum){
+                while(day < weekday){
                     ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval '%d day' AS date;", interval));
                     if(rsDateFirst.next()){
                         String currentTime = doctorSchedule[day*2];

@@ -483,7 +483,7 @@ public class UserFrame  extends JFrame{
                 writer.write("№ Паспорта:" + message[2] + "\r\n");
                 writer.write("--------------------------\r\n");
                 writer.close();
-                JOptionPane.showMessageDialog(null, "Результат распечатан в файл на диск D!", "Результат", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Результат распечатан в файл!", "Результат", JOptionPane.INFORMATION_MESSAGE);
                 refreshData();
                 clearEditAndPasswordForm();
         }
