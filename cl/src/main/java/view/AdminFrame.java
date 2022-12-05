@@ -519,6 +519,7 @@ public class AdminFrame extends JFrame{
             doctor.setPost(newDoctorPostField.getText());
             doctor.setRoom(newDoctorRoomField.getText());
             doctor.setDistrict(newDoctorDistrictField.getText());
+            doctor.setRole("doctor");
             doctor.setName(newDoctorNameField.getText());
             output.writeObject("insertDoctor");
             output.writeObject(doctor);

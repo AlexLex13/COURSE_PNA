@@ -153,7 +153,7 @@ public class DataBaseHandler extends DataBaseConnector {
                 int day = curdamynum;
                 int interval = 0;
                 while(day < 7){
-                        ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval ''%d' day' AS date;", interval));
+                        ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval '%d day' AS date;", interval));
                     if(rsDateFirst.next()){
                         String currentTime = doctorSchedule[day*2];
                         if(currentTime != null){
@@ -186,7 +186,7 @@ public class DataBaseHandler extends DataBaseConnector {
                 }
                 day = 0;
                 while(day < curdamynum){
-                    ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval ''%d' day' AS date;", interval));
+                    ResultSet rsDateFirst = super.getStatement().executeQuery(String.format("SELECT NOW() + interval '%d day' AS date;", interval));
                     if(rsDateFirst.next()){
                         String currentTime = doctorSchedule[day*2];
                         if(currentTime != null){
@@ -304,7 +304,7 @@ public class DataBaseHandler extends DataBaseConnector {
         String[] addData = {
                 String.format("INSERT INTO \"Person\" (name) VALUES('%s');", newAdmin.getName()),
                 String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", newAdmin.getLogin(), newAdmin.getPassword(), newAdmin.getRole()),
-                String.format("INSERT INTO \"Admin\" (rights, block, user_id) VALUES('%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", newAdmin.getRights(), newAdmin.getBlock())
+                String.format("INSERT INTO \"Admin\" (rights, block, user_id) VALUES('%s', '%s', CURRVAL(pg_get_serial_sequence('\"User\"', 'user_id')));", newAdmin.getRights(), newAdmin.getBlock())
         };
         return addData(addData);
     }
@@ -321,7 +321,7 @@ public class DataBaseHandler extends DataBaseConnector {
         String[] addData = {
                 String.format("INSERT INTO \"Person\" (name) VALUES('%s');", doctor.getName()),
                 String.format("INSERT INTO \"User\" (login, password, role, person_id) VALUES('%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", doctor.getLogin(), doctor.getPassword(), doctor.getRole()),
-                String.format("INSERT INTO \"Doctor\" (post, room, district, schedule, user_id) VALUES('%s', '%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"Person\"', 'person_id')));", doctor.getPost(), doctor.getRoom(), doctor.getDistrict(), "-------------")
+                String.format("INSERT INTO \"Doctor\" (post, room, district, schedule, user_id) VALUES('%s', '%s', '%s', '%s', CURRVAL(pg_get_serial_sequence('\"User\"', 'user_id')));", doctor.getPost(), doctor.getRoom(), doctor.getDistrict(), "-------------")
         };
         return addData(addData);
     }
@@ -356,11 +356,18 @@ public class DataBaseHandler extends DataBaseConnector {
 
     public String updateAdmin(Admin admin) {
         String statement = String.format("""
-                        UPDATE "User" U INNER JOIN "Person" P ON P.person_id=U.person_id
-                        INNER JOIN "Admin" A ON A.user_id=U.user_id
-                        SET name='%s',login='%s',rights='%s',block='%s'
-                        WHERE U.user_id='%d';""", admin.getName(),
-                admin.getLogin(), admin.getRights(), admin.getBlock(), admin.getUserId());
+                        UPDATE "Person"
+                        SET name='%s'
+                        WHERE person_id = (SELECT person_id FROM "User" WHERE user_id='%d');
+                                                
+                        UPDATE "User"
+                        SET login='%s'
+                        WHERE user_id='%d';
+                        
+                        UPDATE "Admin"
+                        SET rights='%s',block='%s'
+                        WHERE user_id='%d';""", admin.getName(), admin.getUserId(),
+                admin.getLogin(), admin.getUserId(), admin.getRights(), admin.getBlock(), admin.getUserId());
         try {
             super.getStatement().executeUpdate(statement);
             return "Успешно сохранено!";
@@ -460,9 +467,15 @@ public class DataBaseHandler extends DataBaseConnector {
 
 
     public String deleteAdmin(Admin deleteAdmin){
-        String statement = String.format("DELETE from \"Admin\" A, \"User\" U, \"Person\" P " +
-                "USING \"Admin\", \"User\", \"Person\" " +
-                "WHERE U.user_id=A.user_id && U.person_id=P.person_id && U.login='%s';", deleteAdmin.getLogin());
+        String statement = String.format("""
+                DELETE from "Admin"
+                WHERE user_id=(SELECT user_id FROM "User" WHERE login='%s');
+                                
+                DELETE from "Person"
+                WHERE person_id=(SELECT person_id FROM "User" WHERE login='%s');
+                                
+                DELETE from "User"
+                WHERE login='%s';""", deleteAdmin.getLogin(), deleteAdmin.getLogin(), deleteAdmin.getLogin());
         try{
             super.getStatement().execute(statement);
             return "Успешно удалено!";
@@ -475,9 +488,12 @@ public class DataBaseHandler extends DataBaseConnector {
 
 
     public String deleteUser(User deleteUser){
-        String statement = String.format("DELETE from \"User\" U, \"Person\" P " +
-                "USING \"User\", \"Person\" " +
-                "WHERE U.person_id=P.person_id && U.login='%s';", deleteUser.getLogin());
+        String statement = String.format("""
+                DELETE from "Person"
+                WHERE person_id=(SELECT person_id FROM "User" WHERE login='%s');
+                                
+                DELETE from "User"
+                WHERE login='%s';""", deleteUser.getLogin(), deleteUser.getLogin());
         try{
             super.getStatement().execute(statement);
             return "Успешно удалено!";
@@ -489,9 +505,15 @@ public class DataBaseHandler extends DataBaseConnector {
     }
 
     public String deleteClient(Client client){
-        String statement = String.format("DELETE from \"Client\" C, \"Visit\" V, \"Person\" P " +
-                "USING \"Client\", \"Visit\", \"Person\" " +
-                "WHERE C.person_id=P.person_id && C.client_id=V.client_id && C.client_id='%d';", client.getId());
+        String statement = String.format("""
+                DELETE from "Visit"
+                WHERE client_id=(SELECT client_id FROM "Client" WHERE client_id='%d');
+                                
+                DELETE from "Person"
+                WHERE person_id=(SELECT person_id FROM "Client" WHERE client_id='%d');
+                                
+                DELETE from "Client"
+                WHERE client_id='%d';""", client.getId(), client.getId(), client.getId());
         try{
             super.getStatement().execute(statement);
             return "Успешно удалено!";
@@ -503,7 +525,15 @@ public class DataBaseHandler extends DataBaseConnector {
     }
 
     public String deleteDoctor(Doctor doctor){
-        String statement = String.format("DELETE from \"Person\" P, \"Doctor\" D, \"User\" U USING \"Person\", \"Doctor\", \"User\" WHERE P.person_id=U.person_id and U.user_id=doctor.user_id and D.doctor_id='%d';", doctor.getId());
+        String statement = String.format("""               
+                WITH usr as (
+                DELETE from "Doctor"
+                WHERE doctor_id='%d'
+                RETURNING user_id)
+                                
+                DELETE from "Person"
+                WHERE person_id=(SELECT person_id FROM "User"
+                				 WHERE user_id=(SELECT user_id FROM usr));""", doctor.getId());
         try{
             super.getStatement().execute(statement);
             return "Успешно удалено!";
