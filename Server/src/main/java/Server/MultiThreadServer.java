@@ -11,9 +11,9 @@ public class MultiThreadServer {
             System.out.println("Server Started ....");
             while (true) {
                 counter++;
-                Socket serverClient = server.accept();  // сервер принимает запрос на подключение клиента
+                Socket serverClient = server.accept();
                 System.out.println(">>> " + "Client number " + counter + " started!");
-                ServerClientThread sct = new ServerClientThread(serverClient, counter); // отправляем запрос в отдельный поток
+                ServerClientThread sct = new ServerClientThread(serverClient, counter);
                 sct.start();
             }
         } catch (Exception e) {
